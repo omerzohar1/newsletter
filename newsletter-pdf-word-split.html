@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDF בלי כאב ראש: המרה ל-Word ופיצול קבצים | גבאי AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gabay-plum: #462B40;
+    --gabay-orange: #F26724;
+    --gabay-terracotta: #CC6D3F;
+    --gabay-light: #F0EFEC;
+    --gabay-gold: #CAA06D;
+    --gabay-white: #FFFFFF;
+
+    --plum: var(--gabay-plum);
+    --plum-dark: var(--gabay-plum);
+    --cream: rgba(70,43,64,.07);
+    --cream-light: var(--gabay-light);
+    --terra: var(--gabay-orange);
+    --terra-soft: rgba(242,103,36,.09);
+    --gold: var(--gabay-gold);
+    --white: var(--gabay-white);
+    --text: var(--gabay-plum);
+    --muted: rgba(70,43,64,.65);
+    --border: rgba(70,43,64,.15);
+    --warn-bg: rgba(204,109,63,.12);
+    --warn: #9E4A22;
+    --radius: 12px;
+    --font-he: "Simpler Wide", "Simpler", "Assistant", "Heebo", sans-serif;
+    --font-en: "Ploni ML", "Montserrat", "Assistant", sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-he);
+    background: var(--gabay-light);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 17px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; background: var(--cream-light); }
+
+  /* Header */
+  .hero { background: var(--plum); color: var(--white); padding: 36px 40px 48px; }
+  .hero-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .logo { display: block; width: 130px; height: auto; color: var(--white); }
+  .logo svg { display: block; width: 100%; height: auto; }
+  .en { font-family: var(--font-en); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; direction: ltr; unicode-bidi: isolate; }
+  .en .o { color: var(--gabay-orange); }
+  .tag { font-size: 13px; letter-spacing: .03em; border: 1px solid rgba(202,160,109,.6); border-radius: 6px; padding: 5px 14px; color: rgba(255,255,255,.9); }
+  .kicker { margin-top: 52px; color: var(--white); font-size: 15px; display: inline-block; padding-bottom: 10px; border-bottom: 1px solid var(--gold); }
+  .hero h1 { font-size: 38px; line-height: 1.25; font-weight: 700; margin-top: 18px; }
+  .hero h1 span { display: block; font-weight: 300; color: rgba(255,255,255,.85); }
+  .hero .lead { margin-top: 20px; font-size: 18px; color: rgba(255,255,255,.88); max-width: 620px; }
+  .hero .lead b { color: var(--white); }
+
+  main { padding: 8px 40px 40px; }
+  section { margin-top: 44px; }
+  h2 { font-size: 27px; font-weight: 700; line-height: 1.35; margin-bottom: 14px; }
+  h2 .num { color: var(--terra); }
+  .section-label { font-size: 13px; font-weight: 600; color: var(--muted); letter-spacing: .04em; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+  .section-label .n { font-family: var(--font-en); font-weight: 700; color: var(--gabay-orange); }
+  .section-label::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+  p + p { margin-top: 10px; }
+
+  .why { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 18px; }
+  .why div { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; }
+  .why h3 { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+  .why p { font-size: 15px; color: var(--muted); }
+
+  /* Part divider */
+  .part { margin-top: 56px; background: var(--plum); color: var(--white); border-radius: var(--radius); padding: 22px 26px; display: flex; gap: 18px; align-items: center; }
+  .part .badge { flex: none; width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--gold); color: var(--gold); display: grid; place-items: center; font-size: 20px; font-family: var(--font-en); font-weight: 700; }
+  .part h2 { margin: 0; font-size: 24px; }
+  .part p { color: rgba(255,255,255,.82); font-size: 15px; margin-top: 2px; }
+
+  /* Steps */
+  .step { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 24px; margin-top: 14px; border-right: 4px solid var(--plum); }
+  .step-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px; flex-wrap: wrap; }
+  .step-no { font-size: 13px; font-weight: 700; color: var(--terra); letter-spacing: .05em; white-space: nowrap; }
+  .step h3 { font-size: 19px; font-weight: 700; }
+  .step p { font-size: 16px; }
+  .note { margin-top: 12px; background: var(--terra-soft); border-radius: 8px; padding: 10px 14px; font-size: 15px; }
+  .note.warn { background: var(--warn-bg); color: var(--warn); }
+  kbd { font-family: inherit; font-size: 14px; background: var(--cream); border: 1px solid var(--border); border-bottom-width: 2px; border-radius: 5px; padding: 1px 7px; direction: ltr; display: inline-block; }
+  .ui { font-weight: 700; background: var(--cream); padding: 0 6px; border-radius: 4px; white-space: nowrap; }
+  .ltr { direction: ltr; unicode-bidi: isolate; display: inline-block; }
+
+  .example { margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap; }
+  .chip { background: var(--cream); border-radius: 8px; padding: 8px 12px; font-size: 15px; }
+  .chip b { color: var(--plum); }
+
+  .track { margin-top: 30px; font-size: 20px; font-weight: 700; color: var(--plum); padding-bottom: 6px; border-bottom: 2px solid var(--terra); display: inline-block; }
+  .track + p { margin-top: 12px; }
+  .mock { margin-top: 14px; background: #fff; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; color: #222; }
+  .mock-title { background: #F2F2F2; padding: 8px 14px; font-size: 13px; border-bottom: 1px solid #ddd; }
+  .mock-row { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-bottom: 1px solid #eee; flex-wrap: wrap; }
+  .mock-row.end { justify-content: flex-end; border-bottom: 0; }
+  .mk-n { width: 22px; height: 22px; border-radius: 50%; background: var(--terra); color: #fff; font-weight: 700; font-size: 12px; display: grid; place-items: center; flex: none; }
+  .mock-row.end .mk-n { margin-right: auto; }
+  .mk-l { font-weight: 600; }
+  .mk-f { border: 2px solid var(--terra); border-radius: 4px; padding: 3px 10px; background: var(--terra-soft); font-weight: 600; }
+  .mk-f.sm { min-width: 80px; }
+  .mk-r { color: #666; }
+  .mk-r.on { color: #222; font-weight: 600; }
+  .mk-btn { border: 2px solid var(--terra); border-radius: 4px; padding: 4px 18px; font-weight: 600; background: var(--terra-soft); }
+  .mk-btn.ghost { border: 1px solid #ccc; background: #fff; color: #666; font-weight: 400; }
+
+  .precheck { margin-top: 20px; background: var(--white); border: 2px solid var(--terra); border-radius: var(--radius); padding: 20px 22px; }
+  .pc-head { font-size: 19px; font-weight: 700; display: flex; gap: 8px; margin-bottom: 6px; }
+  .precheck p { font-size: 16px; }
+  .pc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+  .pc-grid > div { background: var(--cream-light); border-radius: 8px; padding: 12px 14px; font-size: 15px; }
+  .go { display: block; margin-top: 8px; font-weight: 700; color: var(--terra); }
+  .pc-foot { margin-top: 12px; font-size: 15px !important; color: var(--muted); }
+  @media (max-width: 640px) { .pc-grid { grid-template-columns: 1fr; } }
+
+  .cta-hint { font-size: 13px !important; color: rgba(255,255,255,.6); margin-top: 10px !important; }
+
+  footer .divider { height: 1px; background: rgba(255,255,255,.15); margin: 28px auto 24px; max-width: 420px; }
+  footer .cta { margin-top: 16px; }
+
+  /* Cards */
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 16px; }
+  .card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; }
+  .card .ic { font-size: 24px; }
+  .card h3 { font-size: 16px; font-weight: 700; margin-top: 6px; }
+  .card p { font-size: 14px; color: var(--muted); margin-top: 4px; line-height: 1.6; }
+
+  /* Mistakes */
+  .mistakes { margin-top: 16px; display: grid; gap: 10px; }
+  .mistake { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; display: flex; gap: 14px; }
+  .mistake .x { flex: none; font-size: 20px; line-height: 1.5; }
+  .mistake h3 { font-size: 16px; font-weight: 700; }
+  .mistake p { font-size: 15px; color: var(--muted); }
+
+  /* Checklist */
+  .checklist { margin-top: 44px; background: var(--plum); color: var(--white); border-radius: var(--radius); padding: 28px 30px; border-top: 3px solid var(--gold); }
+  .checklist h2 { color: var(--white); }
+  .checklist ul { list-style: none; margin-top: 8px; }
+  .checklist li { padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,.14); display: flex; gap: 12px; }
+  .checklist li:last-child { border-bottom: 0; }
+
+  /* Tips */
+  .tips { margin-top: 16px; display: grid; gap: 10px; }
+  .tip { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 18px; display: flex; gap: 12px; font-size: 15px; }
+  .tip .ic { flex: none; }
+
+  /* Footer */
+  footer { background: var(--plum); color: rgba(255,255,255,.85); padding: 44px 40px; text-align: center; border-top: 1px solid var(--gold); }
+  footer .brand { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-bottom: 26px; }
+  footer .mono { width: 34px; color: var(--gold); }
+  footer .mono svg, footer .wm svg { display: block; width: 100%; height: auto; }
+  footer .wm { width: 120px; color: var(--white); }
+  footer .makers { font-size: 11px; letter-spacing: .18em; color: rgba(255,255,255,.8); margin-top: -4px; }
+  footer h3 { color: var(--white); font-size: 20px; font-weight: 700; }
+  footer p { font-size: 15px; margin-top: 6px; }
+  .team { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+  .person { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); border-radius: 8px; padding: 10px 16px; font-size: 14px; min-width: 150px; }
+  .person b { color: var(--white); display: block; font-size: 15px; }
+  .person a { color: var(--gold); text-decoration: none; direction: ltr; unicode-bidi: isolate; }
+  .cta { display: inline-block; margin-top: 22px; background: var(--terra); color: var(--white); text-decoration: none; font-weight: 700; padding: 13px 30px; border-radius: 10px; }
+  .small { margin-top: 22px; font-size: 12px; color: rgba(255,255,255,.5); }
+  .todo { background: #FFF3C4; color: #6B4E00; padding: 0 4px; border-radius: 3px; font-size: .9em; }
+
+  @media (max-width: 640px) {
+    body { font-size: 16px; }
+    .hero { padding: 28px 20px 36px; }
+    .hero h1 { font-size: 28px; }
+    main { padding: 4px 16px 32px; }
+    .why, .cards { grid-template-columns: 1fr; }
+    .step { padding: 18px; }
+    .part { padding: 18px; }
+    .checklist { padding: 22px 18px; }
+    footer { padding: 30px 16px; }
+    .logo { width: 108px; }
+    .hero h1 { font-size: 29px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- 1. Header -->
+  <header class="hero">
+    <div class="hero-top">
+      <div class="logo" role="img" aria-label="GABAY קבוצת גבאי"><svg xmlns="http://www.w3.org/2000/svg" viewBox="55.3 85.1 969.2 251.5" fill="currentColor"><path d="M 122.2 85.1 C 84.7 85.1 55.3 116.2 55.3 156 L 55.3 266.1 C 55.3 305.6 84.7 336.6 122.2 336.6 C 159.7 336.6 189.4 305.6 189.4 266.1 L 189.4 222.7 L 118.8 222.7 L 118.8 253.8 L 159.6 253.8 L 159.6 266.2 C 159.6 287.9 142.8 305.5 122.2 305.5 C 112.2 305.5 103.4 301.7 95.9 294.3 C 88.7 286.3 85.1 276.8 85.1 266.2 L 85.1 156 C 85.1 134.1 101.7 116.2 122.1 116.2 C 142.5 116.2 159.6 134.4 159.6 156 L 159.6 159.4 L 189.4 159.4 L 189.4 156 C 189.4 116.9 159.3 85.1 122.2 85.1 M 330.8 85.1 C 293.3 85.1 263.9 116.2 263.9 156 L 263.9 336.6 L 293.8 336.6 L 293.8 253.8 L 368.3 253.8 L 368.3 336.6 L 398.1 336.6 L 398.1 156 C 398.1 116.9 367.9 85.1 330.8 85.1 M 330.8 116.2 C 351.1 116.2 368.2 134.5 368.2 156 L 368.2 222.7 L 293.7 222.7 L 293.7 156 C 293.7 134.1 310.3 116.2 330.8 116.2 Z M 330.8 116.2 M 748.1 85.1 C 710.6 85.1 681.3 116.2 681.3 156 L 681.3 336.6 L 711.1 336.6 L 711.1 253.8 L 785.6 253.8 L 785.6 336.6 L 815.4 336.6 L 815.4 156 C 815.4 116.9 785.2 85.1 748.1 85.1 M 748.1 116.2 C 768.5 116.2 785.6 134.5 785.6 156 L 785.6 222.7 L 711.1 222.7 L 711.1 156 C 711.1 134.1 727.7 116.2 748.1 116.2 Z M 748.1 116.2 M 606.7 156 C 606.7 116.9 576.6 85.1 539.5 85.1 L 472.6 85.1 L 472.6 336.6 L 539.5 336.6 C 577.2 336.6 606.7 305.6 606.7 266.1 C 606.7 244.4 597.7 224.6 581.7 211.1 C 597.7 197.5 606.7 177.7 606.7 156 M 539.5 195.3 L 502.4 195.3 L 502.4 116.2 L 539.5 116.2 C 559.8 116.2 576.9 134.5 576.9 156 C 576.9 177.6 560.1 195.3 539.5 195.3 Z M 539.5 305.5 L 502.4 305.5 L 502.4 226.4 L 539.5 226.4 C 559.8 226.4 576.9 244.6 576.9 266.2 C 576.9 287.7 560.1 305.5 539.5 305.5 Z M 539.5 305.5 M 1024.5 85.6 L 994.8 85.6 L 994.8 153.1 C 993.7 169.9 985.1 178.7 975.1 188.8 C 969 195 962.7 201.3 958 209.9 C 955.4 205.2 952.2 200.6 948.4 196.4 C 946.1 193.8 943.5 191.4 941 189 C 937.5 185.8 934.3 182.8 931.6 179.3 C 925 170.5 921.6 161 921.1 149.4 L 921.1 85.6 L 891.8 85.6 L 891.8 156.6 C 893 170.3 898.1 183.2 906.6 194.1 C 910.4 199 914.9 203 919.4 206.9 C 922.5 209.7 925.7 212.6 928.5 215.7 C 937.7 225.8 942.9 237.6 942.9 248 L 943.2 251.4 L 943.2 333.5 L 973.1 333.5 L 973.1 247.1 C 973.7 235 977.3 228.6 985 218.7 C 988.4 214.4 992.6 210.6 996.7 207 C 1000.7 203.3 1005 199.6 1008.7 195.1 C 1017.9 184 1023.4 170.2 1024.5 154.9 Z M 1024.5 85.6 "/></svg></div>
+      <span class="tag">עדכוני כלים וטכנולוגיה — גבאי AI</span>
+    </div>
+    <div class="kicker"><span class="en" style="display:block">The making of <span class="o">smart work.</span></span><span style="display:block;margin-top:4px;font-size:14px;color:rgba(255,255,255,.75)">טיפ עבודה מהארגז הקיים</span></div>
+    <!-- 2. Main headline -->
+    <h1>קיבלתם PDF ואתם צריכים לערוך או לפצל אותו?
+      <span>הכלים שכבר יש לכם יודעים לעשות את זה.</span></h1>
+    <!-- 3. Opening -->
+    <p class="lead">
+      חוזים, נספחים, תוכניות ודוחות מגיעים אלינו כל יום כקובצי PDF. בניוזלטר הזה נראה <b>שני דברים</b>: איך הופכים PDF למסמך <b>Word שאפשר לערוך</b>, ואיך <b>שומרים רק חלק מהעמודים</b> (למשל 15 העמודים האחרונים) כקובץ נפרד.
+      הכול עם כלים <b>שכבר מותקנים אצלכם</b>, בלי להעלות קבצים לאתרים חיצוניים.
+    </p>
+  </header>
+
+  <main>
+
+    <!-- 4. Why it matters -->
+    <section>
+      <div class="section-label"><span class="n">01</span> — למה זה חשוב</div>
+      <h2>המסמכים שלנו נשארים אצלנו</h2>
+      <p>כשמחפשים בגוגל "PDF to Word", התוצאות הראשונות הן אתרים חינמיים. נוח, אבל ברגע שמעלים לשם קובץ, <b>הוא יוצא מהארגון</b>. בחוזים, בהסכמי שכירות ובנתונים פיננסיים זה סיכון מיותר.</p>
+      <div class="why">
+        <div><h3>🔒 פרטיות</h3><p>Word, Edge ו-Acrobat Reader עובדים על הקובץ במחשב שלכם או בסביבת Microsoft 365 של החברה.</p></div>
+        <div><h3>💸 בלי עלות נוספת</h3><p>אין צורך ברישיון Acrobat Pro או במנוי לאתר חיצוני.</p></div>
+      </div>
+    </section>
+
+    <!-- PART A -->
+    <div class="part">
+      <div class="badge">A</div>
+      <div><h2>המרת PDF למסמך Word לעריכה</h2><p>הכלי: Word במחשב (Microsoft 365)</p></div>
+    </div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-no">שלב #1</span><h3>פותחים את ה-PDF מתוך Word</h3></div>
+      <p>פותחים את <b>Word</b>, לוחצים <span class="ui">קובץ</span> ← <span class="ui">פתח</span> ← <span class="ui">עיון</span>, ובוחרים את קובץ ה-PDF.</p>
+      <div class="note">💡 <b>קיצור:</b> קליק ימני על הקובץ ← <span class="ui">פתח באמצעות</span> ← <span class="ui">Word</span>.</div>
+    </div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-no">שלב #2</span><h3>מאשרים את ההמרה</h3></div>
+      <p>Word מציג הודעה שהוא עומד <b>להמיר את ה-PDF למסמך שניתן לערוך</b>, ושייתכן שהתוצאה לא תיראה בדיוק כמו המקור. לוחצים <span class="ui">אישור</span> ומחכים כמה שניות. בקבצים ארוכים זה לוקח קצת יותר.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-no">שלב #3</span><h3>בודקים את התוצאה מול המקור</h3></div>
+      <p>עוברים על המסמך ומשווים ל-PDF המקורי: <b>טבלאות, מספרים, סכומים ותאריכים</b>. ההמרה טובה מאוד בטקסט רציף, ופחות מדויקת בעיצוב מורכב.</p>
+      <div class="note warn">⛔ <b>בעברית במיוחד:</b> כדאי לוודא שסדר המילים, הסוגריים והמספרים לא התהפך. במסמכים משפטיים, משווים כל סעיף שעורכים.</div>
+    </div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-no">שלב #4</span><h3>שומרים כקובץ Word חדש</h3></div>
+      <p><span class="ui">קובץ</span> ← <span class="ui">שמירה בשם</span>, ובסוג הקובץ בוחרים <span class="ui">מסמך Word (*.docx)</span>. כך <b>המקור נשאר כמו שהוא</b>, ויש לכם עותק לעריכה.</p>
+      <div class="note">✅ סיימתם לערוך וצריך שוב PDF? <span class="ui">קובץ</span> ← <span class="ui">שמירה בשם</span> ← <span class="ui">PDF (*.pdf)</span>.</div>
+    </div>
+
+    <!-- PART B -->
+    <div class="part">
+      <div class="badge">B</div>
+      <div><h2>פיצול PDF: שמירת חלק מהעמודים כקובץ נפרד</h2><p>הכלי: Microsoft Edge או Adobe Acrobat Reader, תלוי איפה ה-PDF נפתח אצלכם</p></div>
+    </div>
+
+    <p style="margin-top:16px">הרעיון פשוט: <b>"מדפיסים" לקובץ PDF חדש</b>, ובוחרים רק את העמודים שרוצים. הנה הדוגמה של 15 העמודים האחרונים.</p>
+    <div class="precheck">
+      <div class="pc-head">🔍 <span>לפני שמתחילים: בודקים איפה ה-PDF נפתח</span></div>
+      <p>ההוראות שונות לפי התוכנה שבה הקובץ נפתח אצלכם, אז <b>קודם בודקים, ורק אחר כך עוברים למסלול המתאים</b>. פותחים את ה-PDF (לחיצה כפולה) ומסתכלים על החלון:</p>
+      <div class="pc-grid">
+        <div><b>נפתח כלשונית בדפדפן</b>, עם כתובת למעלה וסמל Edge הכחול-ירוק<span class="go">← מסלול 1: Edge</span></div>
+        <div><b>נפתח בתוכנה נפרדת</b>, ובראש החלון כתוב <b>Adobe Acrobat</b>; חלון ההדפסה באנגלית עם <span class="ltr">Pages to Print</span><span class="go">← מסלול 2: Acrobat Reader</span></div>
+      </div>
+      <p class="pc-foot">💡 לא בטוחים? קליק ימני על הקובץ ← <span class="ui">פתח באמצעות</span>: התוכנה שמופיעה ראשונה היא ברירת המחדל אצלכם.</p>
+    </div>
+
+    <h3 class="track">מסלול 1: הקובץ נפתח ב-Microsoft Edge</h3>
+
+    <div class="step">
+      <div class="step-head"><span class="step-no">שלב #1</span><h3>פותחים את ה-PDF ב-Edge ובודקים כמה עמודים יש</h3></div>
+      <p>לחיצה כפולה על הקובץ (או קליק ימני ← <span class="ui">פתח באמצעות</span> ← <span class="ui">Microsoft Edge</span>). בסרגל העליון רואים את <b>מספר העמודים הכולל</b>, למשל <span class="ltr">1 / 100</span>.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-no">שלב #2</span><h3>מחשבים את טווח העמודים</h3></div>
+      <p>15 העמודים האחרונים = <b>מסה"כ פחות 14, עד הסוף</b>.</p>
+      <div class="example">
+        <div class="chip">100 עמודים ← <b class="ltr">86-100</b></div>
+        <div class="chip">42 עמודים ← <b class="ltr">28-42</b></div>
+        <div class="chip">רק עמודים מסוימים ← <b class="ltr">1-3, 7, 12</b></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-no">שלב #3</span><h3>פותחים את חלון ההדפסה ובוחרים "שמירה כ-PDF"</h3></div>
+      <p>לוחצים <kbd>Ctrl + P</kbd>. בשדה המדפסת בוחרים <span class="ui">שמור כ-PDF</span> או <span class="ui">Microsoft Print to PDF</span>.</p>
+      <div class="note warn">⛔ <b>חשוב:</b> לוודא שלא נבחרה מדפסת אמיתית, אחרת 15 עמודים ייצאו על נייר.</div>
+    </div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-no">שלב #4</span><h3>מזינים את טווח העמודים ושומרים</h3></div>
+      <p>בשדה <span class="ui">עמודים</span> בוחרים באפשרות של טווח מותאם אישית ומקלידים, למשל, <b class="ltr">86-100</b>. לוחצים <span class="ui">שמור</span>, בוחרים תיקייה ונותנים <b>שם ברור</b> לקובץ.</p>
+      <div class="note">💡 רוצים לפצל לכמה קבצים? חוזרים על שלבים 3–4 לכל טווח: <span class="ltr">1-30</span>, אחר כך <span class="ltr">31-60</span> וכן הלאה.</div>
+    </div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-no">שלב #5</span><h3>פותחים ובודקים</h3></div>
+      <p>פותחים את הקובץ החדש ומוודאים שיש בו <b>בדיוק העמודים הנכונים</b>, ושהקובץ המקורי לא השתנה.</p>
+    </div>
+
+    <h3 class="track">מסלול 2: הקובץ נפתח ב-Adobe Acrobat Reader</h3>
+    <p>לוחצים <kbd>Ctrl + P</kbd> (או על סמל המדפסת). נפתח חלון <b>Print</b> באנגלית. ממלאים בו רק שלושה דברים:</p>
+
+    <div class="mock" dir="ltr" aria-hidden="true">
+      <div class="mock-title">Print</div>
+      <div class="mock-row"><span class="mk-n">1</span><span class="mk-l">Printer:</span><span class="mk-f">Microsoft Print to PDF ▾</span></div>
+      <div class="mock-row"><span class="mk-n">2</span><span class="mk-l">Pages to Print:</span><span class="mk-r">○ All</span><span class="mk-r">○ Current</span><span class="mk-r on">● Pages</span><span class="mk-f sm">86-100</span></div>
+      <div class="mock-row end"><span class="mk-n">3</span><span class="mk-btn">Print</span><span class="mk-btn ghost">Cancel</span></div>
+    </div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-no">שלב #1</span><h3>Printer: מחליפים למדפסת וירטואלית</h3></div>
+      <p>פותחים את הרשימה ליד <span class="ui">Printer</span> (שם בדרך כלל מופיעה מדפסת המשרד, למשל HP) ובוחרים <span class="ui">Microsoft Print to PDF</span>.</p>
+      <div class="note warn">⛔ <b>זה השלב הכי חשוב.</b> אם נשארת מדפסת ה-HP, העמודים יודפסו על נייר.</div>
+    </div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-no">שלב #2</span><h3>Pages to Print: בוחרים את העמודים</h3></div>
+      <p>מסמנים <span class="ui">Pages</span> במקום <span class="ui">All</span>, ובתיבה שלידו מקלידים את הטווח, למשל <b class="ltr">86-100</b>. את מספר העמודים הכולל רואים מתחת לתצוגה המקדימה בצד ימין: <span class="ltr">Page 1 of 100</span>.</p>
+      <div class="note">💡 את שאר ההגדרות בחלון משאירים כמו שהן: <span class="ltr">Size, Orientation, Comments &amp; Forms</span>.</div>
+    </div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-no">שלב #3</span><h3>לוחצים Print ושומרים</h3></div>
+      <p>לוחצים <span class="ui">Print</span>. <b>שום דבר לא מודפס</b>: נפתח חלון שמירה. בוחרים תיקייה, נותנים <b>שם ברור</b> ולוחצים <span class="ui">Save</span>.</p>
+      <div class="note">✅ זהו. נוצר PDF חדש רק עם העמודים שבחרתם, והמקור לא השתנה. לפיצול לכמה קבצים, חוזרים על שלבים 2–3 עם טווח אחר.</div>
+    </div>
+
+    <!-- 6. What you get -->
+    <section>
+      <div class="section-label"><span class="n">02</span> — איך זה עובד בפועל</div>
+      <h2>מתי להשתמש במה</h2>
+      <div class="cards">
+        <div class="card"><div class="ic">📝</div><h3>Word</h3><p>כשצריך <b>לשנות טקסט</b>: לעדכן סעיף, להעתיק פסקאות, לתקן פרטים.</p></div>
+        <div class="card"><div class="ic">✂️</div><h3>Edge / Acrobat Reader</h3><p>כשצריך <b>להוציא עמודים</b> מקובץ: נספח, פרק, או 15 העמודים האחרונים.</p></div>
+        <div class="card"><div class="ic">🤖</div><h3>Copilot</h3><p>כשצריך <b>להבין</b> את המסמך: סיכום, שליפת נקודות עיקריות או טבלה מתוך ה-PDF.</p></div>
+      </div>
+    </section>
+
+    <!-- 7. Common mistakes -->
+    <section>
+      <div class="section-label"><span class="n">03</span> — שימו לב</div>
+      <h2>טעויות נפוצות</h2>
+      <div class="mistakes">
+        <div class="mistake"><span class="x">⛔</span><div><h3>העלאה לאתרי המרה חינמיים</h3><p>ilovepdf, Smallpdf ודומיהם שומרים את הקובץ אצלם לפחות זמנית. חוזים ומסמכים רגישים לא מעלים לשם.</p></div></div>
+        <div class="mistake"><span class="x">⛔</span><div><h3>לסמוך על ההמרה בלי לבדוק</h3><p>טבלאות, מספרים ועברית יכולים לזוז בהמרה. תמיד משווים למקור לפני ששולחים הלאה.</p></div></div>
+        <div class="mistake"><span class="x">⛔</span><div><h3>לדרוס את הקובץ המקורי</h3><p>שומרים את קובץ ה-Word או החלק המפוצל בשם חדש. את ה-PDF המקורי לא דורסים.</p></div></div>
+        <div class="mistake"><span class="x">⛔</span><div><h3>PDF סרוק</h3><p>אם ה-PDF הוא צילום של דף, Word ינסה לזהות את הטקסט, אבל התוצאה פחות אמינה, במיוחד בעברית. כדאי לבקש מהשולח קובץ מקור.</p></div></div>
+        <div class="mistake"><span class="x">⛔</span><div><h3>מה שהולך לאיבוד בפיצול</h3><p>"הדפסה ל-PDF" עלולה לא לשמור קישורים, סימניות ושדות טופס למילוי. לטפסים כדאי לשמור את המקור לצד הפיצול.</p></div></div>
+      </div>
+    </section>
+
+    <!-- 8. Checklist -->
+    <div class="checklist">
+      <h2>צ'קליסט לפני ששולחים</h2>
+      <ul>
+        <li><span>✅</span><span>עבדתי עם <b>Word, Edge או Acrobat Reader</b>, לא עם אתר חיצוני</span></li>
+        <li><span>✅</span><span>שמרתי <b>בשם חדש</b>, והמקור נשאר כמו שהוא</span></li>
+        <li><span>✅</span><span>בדקתי <b>סכומים, תאריכים וטבלאות</b> מול ה-PDF המקורי</span></li>
+        <li><span>✅</span><span>וידאתי שהטקסט בעברית <b>לא התהפך</b></span></li>
+        <li><span>✅</span><span>בקובץ המפוצל יש <b>בדיוק העמודים הנכונים</b></span></li>
+      </ul>
+    </div>
+
+    <!-- 9. Quick tips -->
+    <section>
+      <div class="section-label"><span class="n">04</span> — טיפים מהירים</div>
+      <h2>עוד כמה דברים שכדאי לדעת</h2>
+      <div class="tips">
+        <div class="tip"><span class="ic">💡</span><span>צריכים רק <b>להעתיק פסקה</b>? לפעמים מספיק לסמן את הטקסט ב-Edge ולהעתיק. אין צורך בהמרה מלאה.</span></div>
+        <div class="tip"><span class="ic">💡</span><span>הדרך הכי טובה לקבל Word? <b>לבקש מהשולח את קובץ המקור</b>. זה תמיד עדיף על המרה.</span></div>
+        <div class="tip"><span class="ic">💡</span><span>שם קובץ טוב חוסך חיפושים: <span class="ltr">חוזה_שכירות_נספחים_עמ86-100.pdf</span></span></div>
+        <div class="tip"><span class="ic">🤖</span><span>מסמך של 80 עמודים ואתם מחפשים סעיף אחד? בקשו מ-<b>Copilot</b> לסכם או למצוא אותו, ואז פצלו רק את מה שצריך.</span></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 10. Footer -->
+  <footer>
+    <div class="brand" role="img" aria-label="GABAY THE MAKERS">
+      <div class="mono"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 251 520" fill="currentColor"><path d="M 0.1 395.7 C 2.4 458.8 55 516.8 118.8 519.8 C 192.4 523.4 249.6 468.5 251 394.9 L 251 107.7 C 249.8 73.1 240.4 46.1 212.1 25.3 C 187.6 7.3 157.5 0.3 127.4 0 C 119.5 -0.1 111.1 0.1 103.2 1 C 47.6 7.5 3.6 53.5 0.5 109.8 C 0.2 195.3 0.8 280.7 0.5 366.1 C 0.5 375.9 -0.3 385.8 0.1 395.7 Z M 19.1 236.2 C 45.6 237.8 83.8 228.5 97.3 258.9 C 102.3 270.1 102 284.6 96.3 295.6 C 89.1 309.7 76.5 314.8 62.3 316.5 C 62 316.5 61.6 316.4 61.2 316.4 L 17.9 316.4 L 17.9 236.7 L 19.1 236.1 Z M 17.9 219.1 L 17.9 180.6 C 21 185 23.9 189.7 27.5 193.9 C 34.5 202.4 43.9 209.8 53.5 215.2 C 55.7 216.5 58.6 217.3 60.4 219.1 L 17.9 219.1 Z M 59.3 334.3 C 61.8 334.3 64.2 334.4 66.3 334.6 C 85.7 337.1 100.7 353.8 100.7 374 C 100.7 395.8 83 413.7 61.2 413.7 L 19.6 413.7 C 18.4 408.3 17.7 402.9 17.5 397.4 L 17.9 334.5 L 49.4 334.3 L 59.3 334.3 Z M 151.6 500.2 C 126.2 505.7 100.2 502.7 77.2 490.3 C 54.6 478 35.4 456.3 25.2 431.5 L 61.2 431.5 C 83.5 431.5 102.9 418.6 112.3 399.8 C 114.3 410.1 117.6 420.2 126.3 430 C 135.2 440.2 151 445.3 151.7 460.5 Z M 160 435.7 C 157.4 434 155.4 431.8 153 429.9 C 144.6 423.2 137.9 419.3 132.9 409.1 C 131.2 405.6 128.5 397.3 128.6 393.5 C 128.6 391.9 131.5 390.5 132.7 389.4 C 151.8 371.6 146.4 347 147.5 323.5 L 148 323.2 C 164.9 323.4 181.8 322.8 198.7 323.1 C 199.4 323.1 200 323.4 200.7 323.4 C 201.5 323.5 202.6 322.7 203.5 323.3 L 203.8 355.4 C 203.2 366.7 203.7 377.7 200.1 388.7 C 193.2 409.6 172.4 418.9 160 435.7 Z M 203.8 306 L 147.4 306 C 147.3 287.5 145.5 271.6 153.2 253.2 C 160.4 236 192 235.2 199.1 253.1 C 205.5 269.2 203.8 288.1 203.8 306 Z M 227.5 431.2 C 218.2 459.7 196 483.6 168.1 494.5 C 168.2 484.4 167.5 474.1 167.9 464 C 169.1 439.9 192.6 430.5 206.1 413.3 C 212.7 404.8 216.8 394.6 218.7 384.1 L 234 384.1 C 234 400 232.4 416 227.5 431.2 Z M 234 366.8 L 233.4 367.3 L 221 367.3 C 219.8 366.2 220.8 364.6 220.8 363.2 C 221.4 345 220.9 326.5 220.8 308.3 C 220.7 279.3 226.5 223.2 175.6 223.2 C 138.4 223.2 130.3 260 130.3 278.4 C 130.3 302.6 133.1 327.8 130.3 351.8 C 128.4 368.9 123.8 374 118.6 377.4 C 118.5 377.5 118.4 377.6 118.4 377.5 C 118.4 376.3 118.5 375.2 118.5 374 C 118.5 356.4 110.6 340.7 98.3 330.2 C 96.4 328.3 94.3 326.6 91.7 325.1 C 121.2 307.1 126.9 263.2 103.9 237.6 L 93.1 227.9 L 93.7 226.9 C 100 225.8 106.1 225.3 112.2 223.4 C 132 217.4 144.9 204.5 150.8 184.6 C 156.2 166.5 154.1 147.6 154.5 128.9 L 233.4 128.9 L 234 129.5 L 234 366.8 Z M 199.9 45 C 227.8 50.5 234 87.7 233.6 111.5 L 154.5 111.5 C 154.7 97.5 153.4 82.6 158 69.2 C 164.2 51.2 181.2 41.3 199.9 45 Z M 48.4 44.6 C 74.4 20.6 108.6 13.4 143.2 17.4 C 156 18.9 169.6 22.2 181.1 27.9 C 169.7 30.9 159.2 36.9 151.6 46.1 C 142 57.7 138.1 73.1 137.4 88.1 C 136.4 112.1 138.7 137.2 137.5 161.2 C 136.8 173.6 132.9 191 122.5 198.9 C 122.2 199.2 122.1 199.6 121.5 199.5 L 121.5 116.6 C 121.5 114.2 117 110.6 114.5 110.4 C 103.6 111.1 91.6 109.4 80.8 110.4 C 74.8 110.9 70.7 116.6 73.2 122.4 C 74.1 124.7 77.7 127.5 80.1 127.5 L 103.9 127.5 L 104.4 128 L 104.4 207.1 L 103.9 207.6 C 75.6 212.7 47.8 196.1 33.1 172.6 C 8.3 132.7 13.5 76.9 48.4 44.6 Z M 48.4 44.6 "/></svg></div>
+      <div class="wm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="55.3 85.1 969.2 251.5" fill="currentColor"><path d="M 122.2 85.1 C 84.7 85.1 55.3 116.2 55.3 156 L 55.3 266.1 C 55.3 305.6 84.7 336.6 122.2 336.6 C 159.7 336.6 189.4 305.6 189.4 266.1 L 189.4 222.7 L 118.8 222.7 L 118.8 253.8 L 159.6 253.8 L 159.6 266.2 C 159.6 287.9 142.8 305.5 122.2 305.5 C 112.2 305.5 103.4 301.7 95.9 294.3 C 88.7 286.3 85.1 276.8 85.1 266.2 L 85.1 156 C 85.1 134.1 101.7 116.2 122.1 116.2 C 142.5 116.2 159.6 134.4 159.6 156 L 159.6 159.4 L 189.4 159.4 L 189.4 156 C 189.4 116.9 159.3 85.1 122.2 85.1 M 330.8 85.1 C 293.3 85.1 263.9 116.2 263.9 156 L 263.9 336.6 L 293.8 336.6 L 293.8 253.8 L 368.3 253.8 L 368.3 336.6 L 398.1 336.6 L 398.1 156 C 398.1 116.9 367.9 85.1 330.8 85.1 M 330.8 116.2 C 351.1 116.2 368.2 134.5 368.2 156 L 368.2 222.7 L 293.7 222.7 L 293.7 156 C 293.7 134.1 310.3 116.2 330.8 116.2 Z M 330.8 116.2 M 748.1 85.1 C 710.6 85.1 681.3 116.2 681.3 156 L 681.3 336.6 L 711.1 336.6 L 711.1 253.8 L 785.6 253.8 L 785.6 336.6 L 815.4 336.6 L 815.4 156 C 815.4 116.9 785.2 85.1 748.1 85.1 M 748.1 116.2 C 768.5 116.2 785.6 134.5 785.6 156 L 785.6 222.7 L 711.1 222.7 L 711.1 156 C 711.1 134.1 727.7 116.2 748.1 116.2 Z M 748.1 116.2 M 606.7 156 C 606.7 116.9 576.6 85.1 539.5 85.1 L 472.6 85.1 L 472.6 336.6 L 539.5 336.6 C 577.2 336.6 606.7 305.6 606.7 266.1 C 606.7 244.4 597.7 224.6 581.7 211.1 C 597.7 197.5 606.7 177.7 606.7 156 M 539.5 195.3 L 502.4 195.3 L 502.4 116.2 L 539.5 116.2 C 559.8 116.2 576.9 134.5 576.9 156 C 576.9 177.6 560.1 195.3 539.5 195.3 Z M 539.5 305.5 L 502.4 305.5 L 502.4 226.4 L 539.5 226.4 C 559.8 226.4 576.9 244.6 576.9 266.2 C 576.9 287.7 560.1 305.5 539.5 305.5 Z M 539.5 305.5 M 1024.5 85.6 L 994.8 85.6 L 994.8 153.1 C 993.7 169.9 985.1 178.7 975.1 188.8 C 969 195 962.7 201.3 958 209.9 C 955.4 205.2 952.2 200.6 948.4 196.4 C 946.1 193.8 943.5 191.4 941 189 C 937.5 185.8 934.3 182.8 931.6 179.3 C 925 170.5 921.6 161 921.1 149.4 L 921.1 85.6 L 891.8 85.6 L 891.8 156.6 C 893 170.3 898.1 183.2 906.6 194.1 C 910.4 199 914.9 203 919.4 206.9 C 922.5 209.7 925.7 212.6 928.5 215.7 C 937.7 225.8 942.9 237.6 942.9 248 L 943.2 251.4 L 943.2 333.5 L 973.1 333.5 L 973.1 247.1 C 973.7 235 977.3 228.6 985 218.7 C 988.4 214.4 992.6 210.6 996.7 207 C 1000.7 203.3 1005 199.6 1008.7 195.1 C 1017.9 184 1023.4 170.2 1024.5 154.9 Z M 1024.5 85.6 "/></svg></div>
+      <div class="makers en">The Makers</div>
+    </div>
+    <h3>יש לכם שאלה על PDF?</h3>
+    <p>מתחילים עם Copilot: הוא יכול לעזור עם רוב השאלות על הקובץ.</p>
+    <a class="cta" id="copilot-cta" href="https://m365.cloud.microsoft/chat/?prompt=%D7%AA%D7%A2%D7%96%D7%95%D7%A8%20%D7%9C%D7%99%20%D7%A2%D7%9D%20%D7%94%D7%A7%D7%95%D7%91%D7%A5%20PDF%20" target="_blank" rel="noopener" data-prompt="תעזור לי עם הקובץ PDF">🤖 לשיחה עם Copilot</a>
+    <p class="cta-hint" id="cta-hint">השיחה נפתחת עם הבקשה <b>תעזור לי עם הקובץ PDF</b>. נשאר רק להשלים את השאלה ולצרף את הקובץ.</p>
+    <div class="divider"></div>
+    <h3>Copilot לא הצליח לענות? אנחנו כאן</h3>
+    <p>צוות גבאי AI זמין לשאלות, לעזרה עם קובץ מסוים ולרעיונות לניוזלטר הבא.</p>
+    <div class="team">
+      <div class="person"><b>עומר</b><a href="mailto:omer@gabaygroup.com">omer@gabaygroup.com</a></div>
+      <div class="person"><b>יובל</b><a href="mailto:yuval@gabaygroup.com">yuval@gabaygroup.com</a></div>
+      <div class="person"><b>מוטי</b><a href="mailto:moti@gabaygroup.com">moti@gabaygroup.com</a></div>
+    </div>
+    <p class="small"><span class="en" style="display:block;color:rgba(255,255,255,.7)">Gabay. The making of you.</span>גבאי AI · עדכוני כלים וטכנולוגיה</p>
+  </footer>
+
+</div>
+<script>
+  (function () {
+    var a = document.getElementById('copilot-cta');
+    if (!a) return;
+    a.addEventListener('click', function () {
+      try {
+        navigator.clipboard.writeText(a.getAttribute('data-prompt')).then(function () {
+          document.getElementById('cta-hint').textContent = 'הטקסט הועתק. אם השיחה נפתחה ריקה, מדביקים אותו (Ctrl + V) ומשלימים את השאלה.';
+        });
+      } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>
