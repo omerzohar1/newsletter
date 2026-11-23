@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>סיכום קורס Copilot להנהלת חשבונות | גבאי AI</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;800&family=Montserrat:wght@400;600&display=swap');
+:root{
+  --plum:#462B40; --plum-2:#5B3D55; --sand:#E8E6E1; --stone:#E2DEDA; --terracotta:#CC6D3F; --terra-dark:#B25A2F; --white:#FFFFFF;
+  --line:rgba(70,43,64,0.25); --line-soft:rgba(70,43,64,0.12); --mute:rgba(70,43,64,0.72);
+  --warn:#B3261E; --ok:#2E7D32;
+  --radius-btn:3px; --radius-card:6px;
+  --font:"afek","Heebo",Arial,sans-serif; --font-en:"Montserrat",Arial,sans-serif;
+  color-scheme:light;
+  box-sizing:border-box;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{margin:0;background:var(--sand);color:var(--plum);font-family:var(--font);font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased;padding-bottom:env(safe-area-inset-bottom,0px)}
+h1,h2,h3{color:var(--plum);letter-spacing:-0.2px;margin:0;text-wrap:balance}
+h1{font-weight:800;font-size:clamp(34px,5.4vw,54px);line-height:1.12}
+h2{font-weight:800;font-size:clamp(26px,3.4vw,34px);line-height:1.2}
+h3{font-weight:600;font-size:18px;line-height:1.35}
+p{margin:0}
+b,strong{font-weight:600}
+a{color:var(--terracotta)}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--terracotta);outline-offset:2px}
+.en{font-family:var(--font-en);direction:ltr;unicode-bidi:isolate}
+.wrap{max-width:1040px;margin:0 auto;padding:0 max(20px,env(safe-area-inset-left,0px))}
+.narrow{max-width:760px}
+
+/* masthead */
+.mast{text-align:center;padding:calc(34px + env(safe-area-inset-top,0px)) 20px 22px;border-bottom:1px solid var(--line)}
+.mast img{display:block;margin:0 auto;width:200px;height:auto}
+.mast .tag{display:block;margin-top:20px;font-size:14px;font-weight:600;color:var(--terracotta)}
+.mast .sub{margin-top:2px;font-size:16px;color:var(--mute)}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:40;background:rgba(232,230,225,.96);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.nav .wrap{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding-block:10px}
+.nav .wrap::-webkit-scrollbar{display:none}
+.nav a{flex:none;text-decoration:none;color:var(--mute);font-size:15px;font-weight:600;padding:7px 12px;border-radius:var(--radius-btn);border:1px solid transparent;transition:color .2s,border-color .2s,background .2s}
+.nav a:hover{color:var(--plum);border-color:var(--line)}
+.nav a.on{color:var(--white);background:var(--plum);border-color:var(--plum)}
+
+/* hero */
+.hero{padding:56px 0 40px}
+.hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:44px;align-items:center}
+.lead{font-size:19px;margin-top:18px;max-width:48ch}
+.ctas{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:16px;padding:11px 22px;border-radius:var(--radius-btn);text-decoration:none;border:1px solid transparent;transition:background .2s,border-color .2s,color .2s}
+.btn-primary{background:var(--terracotta);color:#fff}
+.btn-primary:hover{background:var(--terra-dark)}
+.btn-sec{background:var(--white);color:var(--plum);border-color:var(--line)}
+.btn-sec:hover{border-color:var(--plum)}
+.btn svg{width:16px;height:16px}
+
+/* anatomy */
+.anat{background:var(--white);border:1px solid var(--line);border-radius:var(--radius-card);padding:24px 26px}
+.anat .cap{font-size:13px;font-weight:600;color:var(--terracotta)}
+.anat .q{margin-top:10px;font-size:20px;line-height:1.8;font-weight:600}
+.anat mark{background:none;color:inherit;border-bottom:3px solid var(--line);padding-bottom:1px;transition:background .25s,border-color .25s}
+.anat mark.on{background:rgba(204,109,63,.14);border-color:var(--terracotta)}
+.legend{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:18px}
+.legend button{text-align:start;background:var(--sand);border:1px solid transparent;border-radius:4px;padding:10px 12px;transition:border-color .2s,background .2s}
+.legend button b{display:block;font-size:16px}
+.legend button span{font-size:13px;color:var(--mute);line-height:1.35;display:block}
+.legend button[aria-pressed="true"]{background:var(--white);border-color:var(--terracotta)}
+.anat .hint{margin-top:12px;font-size:13px;color:var(--mute)}
+
+/* numbers */
+.nums{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));background:var(--white);border:1px solid var(--line);border-radius:var(--radius-card);margin-top:44px}
+.nums div{padding:18px 16px;text-align:center;border-inline-start:1px solid var(--line-soft)}
+.nums div:first-child{border-inline-start:0}
+.nums b{display:block;font-family:var(--font-en);font-size:40px;font-weight:600;line-height:1.1;color:var(--terracotta)}
+.nums span{font-size:15px;color:var(--mute)}
+
+/* sections */
+section.blk{padding:64px 0 8px}
+.shead{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:24px}
+.shead p{color:var(--mute);margin-top:8px;max-width:60ch}
+.card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius-card);padding:22px 24px}
+.note{margin-top:12px;padding:10px 14px;background:var(--stone);border-radius:4px;font-size:15px}
+
+/* sessions */
+.sessions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.step-num{color:var(--terracotta);font-weight:800;font-size:34px;line-height:1;font-family:var(--font-en)}
+.step-lbl{font-size:13px;font-weight:600;color:var(--mute);margin-bottom:10px}
+.sessions h3{font-size:20px;margin-bottom:8px}
+.sessions .card{display:flex;flex-direction:column}
+.sessions .card>p{flex:1}
+
+/* builder */
+.builder{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.field{display:block;margin-bottom:14px}
+.field .lab{display:flex;justify-content:space-between;align-items:baseline;font-weight:600;font-size:15px;margin-bottom:6px}
+.field .lab small{font-weight:400;color:var(--mute);font-size:13px}
+.field textarea{width:100%;min-height:58px;resize:vertical;border:1px solid var(--line);border-radius:4px;padding:10px 12px;background:var(--white);font-size:16px;line-height:1.5}
+.field textarea:focus{outline:2px solid var(--terracotta);outline-offset:0;border-color:transparent}
+.quick{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.qchip{font-size:13px;font-weight:600;padding:5px 10px;border:1px solid var(--line);border-radius:3px;background:var(--sand)}
+.qchip:hover{border-color:var(--plum)}
+.preview{position:sticky;top:84px;align-self:start}
+.preview .out{min-height:180px;white-space:pre-wrap;font-size:17px;line-height:1.75;background:var(--sand);border-radius:4px;padding:16px 18px}
+.preview .out.empty{color:var(--mute)}
+.meter{display:flex;gap:6px;margin:14px 0}
+.meter i{flex:1;height:5px;border-radius:2px;background:var(--stone)}
+.meter i.on{background:var(--terracotta)}
+.meter-txt{font-size:14px;color:var(--mute)}
+.row-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+
+/* library */
+.tools{background:var(--white);border:1px solid var(--line);border-radius:var(--radius-card);padding:14px;display:grid;gap:12px;position:sticky;top:58px;z-index:20}
+.search{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:4px;padding:8px 12px;background:var(--sand)}
+.search svg{width:18px;height:18px;flex:none;color:var(--mute)}
+.search input{border:0;outline:0;background:none;width:100%;font-size:16px}
+.search kbd{flex:none}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:14px;font-weight:600;padding:6px 11px;border:1px solid var(--line);border-radius:3px;background:var(--white);transition:background .2s,color .2s,border-color .2s}
+.chip:hover{border-color:var(--plum)}
+.chip[aria-pressed="true"]{background:var(--plum);color:var(--white);border-color:var(--plum)}
+.chip .c{font-family:var(--font-en);font-size:12px;opacity:.7;margin-inline-start:5px}
+.status{font-size:14px;color:var(--mute);margin:14px 2px 0}
+.lib{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:12px;align-items:start}
+.pc{background:var(--white);border:1px solid var(--line);border-radius:var(--radius-card);padding:18px 20px 14px;display:flex;flex-direction:column;gap:10px;transition:border-color .2s}
+.pc:hover{border-color:var(--plum)}
+.pc .hd{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.pc .cat{font-size:12px;font-weight:600;color:var(--terracotta)}
+.pc h3{font-size:18px}
+.star{flex:none;width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--line);border-radius:3px;background:var(--white);color:var(--mute);font-size:17px;line-height:1}
+.star[aria-pressed="true"]{color:var(--terracotta);border-color:var(--terracotta)}
+.pc .tx{font-size:16px;line-height:1.7;flex:1}
+.pc .tx i{font-style:normal;color:var(--terracotta);font-weight:600}
+.pc mark{background:rgba(204,109,63,.18);color:inherit;border-radius:2px}
+.pc .ft{display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid var(--line-soft);padding-top:12px}
+.act{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;padding:7px 13px;border-radius:3px;border:1px solid var(--line);background:var(--white);transition:background .2s,border-color .2s,color .2s}
+.act:hover{border-color:var(--plum)}
+.act.pri{background:var(--terracotta);border-color:var(--terracotta);color:#fff}
+.act.pri:hover{background:var(--terra-dark)}
+.act.ok{background:var(--ok);border-color:var(--ok);color:#fff}
+.act svg{width:14px;height:14px}
+.fill{display:none;border-top:1px dashed var(--line);padding-top:12px;gap:10px}
+.pc.filling .fill{display:grid;grid-template-columns:1fr 1fr}
+.fill .live,.fill>div{grid-column:1/-1}
+.fill label{display:grid;gap:4px;font-size:13px;font-weight:600;color:var(--mute)}
+.fill input{border:1px solid var(--line);border-radius:3px;padding:7px 10px;font-size:15px;background:var(--sand)}
+.fill .live{font-size:15px;background:var(--sand);border-radius:4px;padding:10px 12px;line-height:1.65}
+.fill .live i{font-style:normal;font-weight:600;color:var(--terracotta)}
+.empty{text-align:center;padding:32px;border:1px dashed var(--line);border-radius:var(--radius-card);margin-top:14px;color:var(--mute)}
+
+/* follow-ups */
+.fups{display:flex;flex-wrap:wrap;gap:8px}
+.fup{display:inline-flex;flex-direction:column;align-items:flex-start;gap:0;border:1px solid var(--line);background:var(--white);border-radius:4px;padding:10px 14px;text-align:start;transition:border-color .2s,background .2s}
+.fup b{font-size:16px}
+.fup small{font-size:13px;color:var(--mute)}
+.fup:hover{border-color:var(--plum)}
+.fup.ok{background:var(--plum);color:#fff}.fup.ok small{color:var(--sand)}
+
+/* tools */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card ul,.card ol{margin:10px 0 0;padding-inline-start:22px}
+.card li{margin-bottom:5px}
+.tblw{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--white);margin-top:16px}
+table{width:100%;border-collapse:collapse;font-size:15.5px}
+th{background:var(--plum);color:var(--sand);font-weight:600;text-align:right;padding:11px 14px}
+td{padding:11px 14px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:600;white-space:nowrap}
+
+/* warn */
+.warn{background:#FBF4F2;border-right:3px solid var(--warn);border-radius:var(--radius-card);padding:8px 22px}
+.warn details{border-bottom:1px solid rgba(179,38,30,.15);padding:12px 0}
+.warn details:last-child{border-bottom:0}
+.warn summary{cursor:pointer;font-weight:600;list-style:none;display:flex;gap:10px;align-items:center}
+.warn summary::-webkit-details-marker{display:none}
+.warn summary::after{content:"+";margin-inline-start:auto;font-family:var(--font-en);color:var(--warn);font-size:20px;line-height:1}
+.warn details[open] summary::after{content:"–"}
+.warn details p{margin-top:6px;padding-inline-start:30px;color:var(--mute)}
+
+/* checklist */
+.check{background:var(--stone);border:1px solid var(--line);border-radius:var(--radius-card);padding:22px 24px}
+.prog{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.bar{flex:1;height:8px;background:var(--white);border-radius:4px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+.prog span{font-size:14px;font-weight:600;min-width:64px;text-align:end}
+.ci{display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line-soft);cursor:pointer}
+.ci:last-of-type{border-bottom:0}
+.ci input{appearance:none;-webkit-appearance:none;flex:none;width:22px;height:22px;margin-top:3px;border:1.5px solid var(--plum);border-radius:3px;background:var(--white);display:grid;place-items:center;cursor:pointer}
+.ci input:checked{background:var(--ok);border-color:var(--ok)}
+.ci input:checked::after{content:"✓";color:#fff;font-size:14px;font-weight:800;line-height:1}
+.ci input:checked+span{text-decoration:line-through;text-decoration-color:rgba(70,43,64,.4);color:var(--mute)}
+.done{display:none;margin-top:12px;font-weight:600;color:var(--ok)}
+.done.on{display:block}
+
+/* tips */
+.tips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.tips .card p{font-size:16px}
+kbd{font-family:var(--font-en);font-size:12.5px;border:1px solid var(--line);border-bottom-width:2px;border-radius:3px;padding:1px 6px;background:var(--white)}
+
+/* footer */
+.footer{background:var(--plum);color:var(--sand);padding:52px 20px calc(44px + env(safe-area-inset-bottom,0px));text-align:center;margin-top:72px}
+.footer .big{font-size:clamp(22px,3vw,30px);font-weight:800;color:var(--sand)}
+.footer p{margin-top:10px}
+.footer a{color:var(--sand)}
+.footer .btn-primary{margin-top:20px;color:#fff}
+.footer .sign{font-family:var(--font-en);font-size:12px;letter-spacing:2px;margin-top:26px;opacity:.75}
+
+.top{position:fixed;left:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));width:44px;height:44px;border-radius:3px;background:var(--plum);color:#fff;border:0;display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity .25s;z-index:50}
+.top.on{opacity:1;pointer-events:auto}
+.top svg{width:18px;height:18px}
+.toast{position:fixed;bottom:calc(24px + env(safe-area-inset-bottom,0px));left:50%;transform:translate(-50%,16px);background:var(--plum);color:#fff;padding:11px 20px;border-radius:4px;font-weight:600;font-size:15px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:60}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:860px){
+  .hero-grid,.builder,.two,.tips,.lib{grid-template-columns:1fr}
+  .sessions{grid-template-columns:1fr}
+  .nums{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .nums div:nth-child(3){border-inline-start:0}
+  .nums div:nth-child(n+3){border-top:1px solid var(--line-soft)}
+  .legend{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .preview{position:static}
+  .tools{position:static}
+  .search kbd{display:none}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;scroll-behavior:auto!important}}
+@media print{
+  .nav,.ctas,.tools,.status,.pc .ft,.star,.top,.toast,.row-btns,.quick,#builder,.prog,.legend .hint{display:none!important}
+  .pc[hidden]{display:flex!important}
+  .pc,.card,.check{break-inside:avoid}
+  body{background:#fff}
+  .footer{margin-top:24px}
+}
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAu8AAADQCAYAAAC3MI8AAAA2mklEQVR42u2dd7glVZW33zodgBaaJC0MeUgSBkmK0xK0yRgAUTGBoCio34AY4TPjjDr4wagMKojCAComBBUUAQVRsiI5mwDJoUkNdN9T3x+7au6+datO1Tmn9q70e5/nPjfXrlq1aq3fXrVDsGCzHak5ATAb2BrYClgLWCn6WAFYMfp6ZeAFwJPRx1PA08ATwJ3AtcB10ednomOHA9qMfx8kPotuElif1wU2AbYA5gLLRb63HDAHmAAeBh4DHgEeBRZGX98b+SEj+JN80P09DjNsHQwRM4p8X/b/5/lKMMb/inb5dllxcBlgo+hjXWBelJPnRfl6lehv+8AM4O/AbcAdwO3R17cBf7WOL7+rntOA/R3diwC4B1izxc/ZVcA2Dn05AIKZNTXAC4BdgJ2AVwGbDvG/y0Yf9oUmeyh3A1cA5wHnAg8lfh+mfK2g0k3mAXsDL43E+uZRZ3IclgDXAJcBvwEuAhYV+D/5oFvWBd5hCY4gQzTbHXqGFN2uviel4BB/30v8/V3AmcDz8rPOMO49XQvYJ4qBGwEbYgpmRdrrWcdYK8rtNouBy6N4eEkUE5/TLRNigIKvUeV9FeAtwBuA7XOCQrKK0LcCRF7FII1rgfOBs4CrHVQrRLU94WGS1+yow7gLsCewcYGkmOcnQYF2L4o6kudiKlPyO//sDFyQIsybLtqyruVi4HdR3PvTkD437HMlmhc3twBeHxUvNivgX2GBYxZ5tp7HFNbOAs7GvEkX/lDlfbzr81J5r4N4fxdwALDDGFWC+LVcOKIhkkL+S8D3MgKPaCcLgAOBNwOzxvDFUR9GO6ndA/wE+Bpwq3ywEvHeZuJ4afNQ1HH8DnBhgWPE1Xz5YzMFRtZ9+xfgYOCNwGo5cbBo0SIc4lzSBP6vge9HOVlCXuJd4h2CnscLslkV+AJmDPDJQwr3gKmvs+1E0s9IVINIJqAtge8C/wA+ghnC40vECX8+SBRAPoMZc3lRFLBmWfd7YsTjDvM39hjSuL01gH8DbonE5C4S7pX5yLD3ug7XkHeeM1Li3ipR5/UCzLDCLwDr53QA5I/NJEzxmf2BK4HrgcMs4W77SdoQrf6AfFukcxfmfB8XVk7EzBf6BFOHxTbluRSiVHqeg8U/Ad+MhPGRmImmYeKjyLHCIa6nNyD5JBOR/bEacAzwIPA5zGRE0Y6EtR5mzO/fgU8Da1v+YPtXb0AHMDmpeZgElfTB2P96KX64M/ArzBj5HXQbvYqaNgmEIOM6w5SPNaL4fAfwW+A1Ekit7ay+J4qDpwEvy8nHYYH82nPwTMYfy0W5+N4obs8p8NwKIfE+BisCJ0QP3cGUM15y3HGpvRw7xOc2J+rt3wMcZQUM0TxWB07BrD60XyI5BEN2CsOCoi/PB9P8OM2vt8JM5roAs9KN8C/sw4afZzDEMeKO5fbAzzCTXA+WiG8Ne2HeOJ4YddaS931Yn+mPeT5Bgc50/P1czBvTe4Ej5JNC4t1Nz/5A4M/A+1J60sMGiEEPt4sHONnr/zzmrcHhcp1GsTJm/PhfI38sKsb6BfzblQCzv56wfrYzcBNwnDqSTuOWy/tbxbUM8vH+gNwQPyfrYt6a3oKpxIvmFjB+hZkIumZKPu4l/KZoh7U3poBPE+pBTk5eIYqDdwDb6dYKifdyWBsz0eSU6CEbFAjKqGj5qootD3wZs5zVqnKh2vM2zBje9wIzGa6C2quJz/VS2jsCs0byHrrFzjpPYYuuZZBv9QaIpORxNsJU4i8G1pGrNKoTdyCmkLaLo3za8+y78e/XAy4Fvo1Ze37UjqwQrRLvo0zI2xu4GXglw41nb1IifGUknvaRG3lPQkVYFrNiyxlRQG+TD9pjk88DTiJ77XklLOHC93bEbLRzlHys9iwD/ABTSJtNO1cJCoGDgBsYvKylEJ0R7+EQfxMAX49E0xymD2tpUpDPOl/7muZi1qI9PafHL9x0oLJ4eSQs9i6QqJrml2m2eDdmidPVlbBEjvAeJf5lxcFZmKGEVzM5blrUi00wRaY3FIwHTYmH8Xnac5bAVOFvoNj8DHU6RavFe1FWxywzdWgLRUPeQ/52zGvkuXKpyu/P0Zjd+lbL6Tz2W+KLcfLaBDMWfhu5gyiZiZzO49aYN627lxBLRXm8NerUr5mSk4MW3gu7g/pNzAo6s3L+XohOi/ftgRsxr6uyKjxlvarzFXTs803bCj15PS8DrgBeKLfy3nkKMePZfwp8MiUw91PuV69kvyzzWoMREk6ImY/xW7Inb0k4iVHiX29Apzf+m+WAX2DWhx/Ff0W5fAmz4dbsjOffdZ725Z92BT7pY2/DrF2vnCwk3lOCwJsiwbBCywNz1iZQtpDfGFP11Svk8m0/iGUxu0K+1nEntc7EHZRlMJO3dpJwEp5yhi34jsSMr54pU1XW+T8D+HDDxPi4sS8r1m2JGda1jlxDSLxPPhh7YbYtBvNq1cdQhCqDUa+AeFofs6HOBnIv50kKzDKQV2E2MGrD5Ohxzt/e9fJczHAGIXx3st8QdaY1D8h/TPwhpuIc34/k2PA2+lyQoz3WwbwVV04WnRfvYNabPisRtHsdsl2QYcsQeBFwmXr7zoP2WpiqysaMtipSE+gP8SzbPrgUZqnWTVtkC1F/34xzwY6YN0Bz5XPe8tGpwL508w1bb0CesHOy3oqLTov3LTBL1PU6KtzJCZAhZpzdpZiJk6J8VoqC8boF7gdD/M04yTOo0TMaRsLp15aNfNlC+POPKs+vl/OcbR3FwJXkc87uWcwxwAEp9yCU3afk5Isxb2uF6Jx4XwOzQdEsBYXcYLEGZj7ASjJHqclqacwugasrOeX64LzoeV1R5hA5vhKWfDyAzYHfYSZTi/LvGcD/YeoYdzGd+C3RelHu0Fsg0SnxvnwkBFZoYZBwVRlbH7gEsxqDGD9ZBcCPMVW9sGbnFtbUZmtjVuKZmegECfmHD3G5MXA+msTqgj2A4zOEe5lz0FzlR19vpOxRAlsB31AcFF0R7z3MUJn11bvPDUbJhL0ZcKZMU4pNPw/sKZMMLaK2A76akeSFcC3gtwV+JMFUKi8Gzk55poMR8nsXsDsz72FyYm9anhGiNeL9WGB+y5NMWNJx0tgTeJ9cbiybHoBZiq5uHYugAe2HwHuB18mdxAj+M46f26uTHS2Tl8Js4GfR57BgDhrHP1y9OfL5RmoG0zdyWteR3YSohXjfF/iAHHxs8XkCWq5qVFaLgm0bloOsktMw4+CF8NU5sGPgJ4BXyCxjcwLmLbgYTD8lD8edkaWBn0SiXojWife5wMkZwr3f4GtPVpLGqSz1h0heZ6DXc6NwBlN3C3QlMkbpmJW5c/Cwfjhs+8srYdUi3tSpsBA69PO0nS/PQpP4x4lROwMHe/JL14WSIOPDpcaxr+clwH/ItUQbxfuXMBNU08RqVWPqghE+XPbsewWTF8DLgHfJ9YZif2CBBxHTVB8c9hrnA1+UW4mKfHAe5g2QihjD224W5g1k/P1EjTqmZcRDH29U+4m2PhblZfmjaAwzMx5Ee1b2e1Ieql7FgQLgSeB+4B/Ag8B9wBOYNVznYpbGW5vJTWqSFfBxxwmOMikoXi3lOEz18xG5YC7LM32iZVBikA8K3v+4kxYk7iWR/91pJdJ5wKpMXx4vGHANYcHzCkb016QPfhizAs2lcjGvHaeinf6q4qrtnxMOz/HVmAmDZ8g1huKTTN38r1eyXyZ9M+mnQUYsjn9+L3BrlJsfivL0vOhjNUyle5mcOB7mxN9xY38vJR6eSvaGdkI0QrzbD8YJHnvDDOhIxIHhTuAU4NvAAznnFv/Pqpjtul8PvJLpq8FUkcSXw1Q+3y0XzOUEpi9NWsV9i4eZLMKsW30h8HvgOuDpRCIIE/63KmbFoT2B3Zl8k5WViAIPPhgAJwGboPkDVOhPVcSfIgIoLFG49zME09cwS0g+JHcoxOqReHcdA3sFOgdxjLoKs276RcA1USzMy8lrAttgJjDvzuQcnH70N2kd257j6944sq0mVItGECzYbMes3+1F+jJUPoV7LJa+jxl3//sxjzkP+CBm1Y25QyYzF9e2RST+AiSg0tgMuCFFFIcO70lapXsJcA7wHeDnwOIxE+MBUaL455Q2ffpCABzO5JuNrrMzcIFj+4fA1cAvmDp8IMzww2G/H+TXawE7YDaqyesIu3ozkHxz9R3g7RX4fhM5E9ivAhulFdFOxhTSHizh+HsCn8YMXbF9Mq/aXra/9KNn5B8d97PTMENVXeXZe6IOXCs1ddSh3cbhcxoAwSDxfgtmHdkqhftXo4f68ZKPPwcz7vwTVq+/ioB4aZRMXQelujt7VmD+PvDGRLKn5PuVTExJUXQK8FHg4ZLvTwC8A/gcZifeZNuhJ9s/iVkuTUO4/Ij3APgKcESFsXVD4ONRgi77ecrrBKQNO4uLGCKbbaJOn+9cZcfchyO//Y6jc9gF8zZmfY/XmRzKeCpwkMS7xHvdxXtWZWW/ioX72ZhxfYcXFO7DDjN4BrMr3YbAD22DlG3gnICxPZDWe+pS9SnrWtdJCPf4s6tt3ENLUATAHzFbu78zIdzLuj9hlCjWBA7DvGEqMp49z0/Tft/P+J94CNeXpI1q0WH19bzdhnn7s1XUWcmKoWXEwxkpndLktR8nl8jl30u+L0Xutf2zEzFvCs8gfUOoMs7rgignf8bhdeblnwOZfCMqRG3JEu+fqCihLQEOwYxP/1sJAjAvUC0E3oTZuGZhyQEjLBAcw4ps3QQGbcbUd+iDAMdEPecbPF3r8VHCuAA3K9P0cp6Rg6KOinAf48oWx+NwLbAbsCtmoqGL1ZHssfNZiwQsyChiCMP60X1y0eHr5+SrP2PW5T8U85ZuUJ4rq6jxWcwQmgfxs1JXMp8cJZcTTRTv8zFjjX0mtCB6UOdjJtGFYx5vWGH9s0g8XTVGkg2GEPAhk9XQnSWcprEK6ascJf3WRVDfA7N0mOuhE0nujxL0Vwr4bjjG77N89HNyO6fxrYyigwvCqNO4AWYcs4uJ4WGB331MrpLJoWM833nMSPHT+POFmBVYLnPY4cw63tWYyfRXJP4u7432ODoozssHY1arE6LW4j3p8EdUcB5/xbzCvWaMh37cJfQeBV7O5Gtk18HJDhhHOQyOTRI5MYeXIAqGbfsJTLX9lx6SVDjgeo7ArERUdsWpn3Iu9s9eFyVL0U0WYVa/ej3pFVbX7IGGK2TFjXdmPMdldqySMem7mDcyz46ZX4OC7afxCOatzMUec2PchlaCE7UX7/bDMzcK3mUKI3J6yv/AjP2+d8SgU6aQCzGr7NyWIbb6IwShcEDFJP7Zm6hu4mxdElSYkqzGGftdVNAGmNVj5gN/cNAxoOC12H/3f5nc9S9IOU4w4rOePJfkmzcN4SqfsGHP9NnAlphhi2njmV0OYzhc7jKNfZhaBe459tUAOBezAlAZb2HG9f1FkYD/9RC5tgwOQ5s2iZqLd5u3kj8+towHOBZNCzHj6e6pkU0WATthqk9Bjr3KeLiD6LiHdlzgxGyL2cwjr7NURucxvp9vAm4u8Z6O+3yEmKUkj005p7KTt91xegtTN4BR8uomd2HeQt1JesW17OpvvLnZu4GlKDbuPuiIf76LqZPpXV5/AFwP7FuzDmdcVLvFY5urA68aMa8I4VW8B1GgKCs4Dwou8Ti7t2GGzNSNe5lc6SQYcG1lBrj3U68dF6viLVbA7uUE9KL2H7QR0leZ3M+AGiWtEPiIdW7BCNc9im0+WENbCP88HImXhUxfj77s4VxxwWgZSziWPbejiayEWQM9rQNV5vXHxbTHMcOXnquhLZ7CDON5iOlj813E3rgzOWxeEcK7eF8VU23Bk4g8FTivxrb5FWZ5LF8P7jzMhMUuE2De/viqbPwd+FCN7RFGHerHHdvc5mDSd14W3eMezLLBrnOQXSw6RGb/X/bz1E5cTDsQuK/m/vghK26VvUFTkn2BZeWGou7ifU8HwiPtVWuAWVnjfRRbTrFK4XQY8BfKXz4tizd03B/nAy902EFK+tkBmOVJ6/z689HID5NrK5flj8kJa8tgKlxCAJzP1CKGi2fFzkM7YApJYvIt5ISH/HgeZhfpuleTz8DN8JleSlycpZwsmiDed3MsmOzgcxRmbHny53ULHM8zuXV3muApe034fTvuj2/w6IMnA7+tqd8lOR0zFjW51GhZ9kg+f29WaBQWn4pioa9O7h4yOS/ELORg52mXcepDDbGLvTdK30N7+8kVRd3F+2s8tXUjZshMnUW7zWXW+bpY4cY+1vJMHTrTpQkxAbD1gOsetdKc9T9fHPH/quIjifMq67Vx8g1ZiIZvdZUsn38Qs5GYD2EGsLtuxf+u+jYo/gUl3O8gKg7c2iDbnAVcR7nDe7M6ArsDS8sdRV3F+6aY1+U+OMqR+HXJkY6PbweOXRton7J4iaNOUfL70zEragzzf1WIJvt3FwKXezqfecCLFR47xyCfP97jebxGt+J/OzBZSw33S4xRRzewY/nvlDuUtTegrQUld5qEKM1h53sQLPHSkOc10E4PAGfibntzO3DM76gvroLZZ2CQsEgb9z3I34KMnx3XINFkJ+/PejynHRQehcXfgUscFi7st7BzMDu+dpldc+JCbwQbp+Wun2KWBG1ax/LHTE6uDQpe87BtxZ9fNUS8FsKreN/WU3tnkL7TYxP4aso5u3iIt+loz35Lx8eP/e5mzCvXJnI+ZmlVH/6xmcKjSMS6bzjMQclYulWHbb0Z8AIHNk6LG8dmiPom+ONxOddc1rX864DOjxCViffAQ6AMLPHe1B7sFUxfkz4o2T4hZpm+LTroi/8yQvAeZh3oOIF9h2ZXTr7uKHn0mVzvOQQ2V4ISCc5mcnUm176xeYfsmrTlto6e8WTcux24tKE5OQBOwuyOXfR6R7XZNo6OLcTYPfK1PDjjM8CVDQ6uIeYVo4sHOLl6zXod88PAEu/2JjBlbRZmH+sXDX5OAU5z2EbPsv+GCo8iwbOYtz8+xEuXChhJW67vycbnNlCE2oWuJ4BfemhzKeBFAzpbQlQiCgJgZaZvvVx2NeHKFtjrBk/trNUxPwyZuhlGmCJax/XF+FhPNtA+difmgagj7Lqt1RQeRYbgK1PABBnxYMMOi6QVPLXzaAtsdV8BfyqD1Qd0toSoRLyvXqASUEZwvrzBTh+f99MOg4Qt0NaUa3pZw1e2SY8JMWvL1CLBNZ78eT387PRdR1zvcBykPOtNy8XJa4k/TziKk1ouUtROvL9wwMM9amCw16COP/+xZaIpdHAvYpbroC8GA+xh+1XZ7TS1Mxl68PFZCpEiwbUOfDnrWV9f5vYyv6AtOSOZN3qys2izeO/n9GTL4uGW2KuqoCSEi0QTVOTjoplMYDbac905he4NH0yzQZmdcdlIiBaJ96dSHohxKntZ//uYzC3xPmagDj3+n0SCEOn+4mo3zmThaAXlgLHjlzrjyhOu/FM6pUIb9Jg6jttlr/0J3WchhGg8t3jqSM6VqcWIviNElX7n/I1XWuXdVa/9ad1nBSIhROO5w1M7y8rUQtRWoxTRKUFHbeP8unvAIk8XtJT8XQghGo/L+Ut2xWqOTC1E44Vs2wmq6LTEE1YXe7hALbU0njMIIUQdeNxxTopZRqYWojGaJSigaULat5pe3vKlTgPlMx4uUIFYCCGaj6vNfZLJTkuVCtE+gbs87StQBim62ulbh7iRpzxcnAKxEEI0H1fFnjBHzAsh/IlQl6woGzZHvL9Az4UQQjQeX+NYtcyhEO1k9RbHxDV8Bkcfw2Y0YbV+yVEIIYZlsad2JmRqIbxrDx/7qazXEnulVdlX8Sne7cp7P+fERmW2ngshhGg8Mz2187xMLYR3AepqjXL7uOu3qLNjs46vhnspRu1ZN7TMCrBWmxmvNyeEEHXA5frrdi5S5V0I/wL0bgdaJmDqMLiNWmrLNX1pw9iYSwrc0HHRsBkhhGg+ruYvJRP8MzK1EF6wC4Z/c9gxiDvn/0o7i5SbemhjkS3efVQ4Zur5EEKIxrOSo+MmE/1CmVoIL9jP3t0Oj9+zRG4bh1LvHHVQXM5bvMU25BIPF6WVA4QQovn4WilC4l0I/9zp4Jhp4+h3bKHtFjjUuvGbipt8i3eN4x6tFyyEEHViHYfHtpP8YzK1EN75swNN2EvRN69umd22AFbwoN9utQ3a9yC0Z7ToJgWOPtTREULUnbUcHttO8vfL1EJ40zQ2f/DQ5h4ts+Fenu7NdXagXJzoLZTdc1AlebybJYQQdYlNm3tq6z6ZWwgvJDXajaQXFstsbwPqv+pM0esPgHc70oHJe3OZLd4nHAvGgHZMWP1eZDOXHwFwkGKJEKKmyWwrT209InMLUQl/8NTOAQ3o1BQpPu+Cn7lAtwOP2+Ldx455bZmwGjr+EEKIurKhp1j+d5laiMq4NKF5bMrcxOlApq4F31QOzbAVY1xb2rEuSwrqiZIa64J4d4mGywgh6syrPLVzBypmCFEVNwGPZmiUMrXcPwG75gjfumu0jYB9cs6/jGsLgUviY8U3YYajxiRMx+9pCSFEXdjZo3gQQlTHRY41SnysTzTEHr2M6/+ip05DAPzMPhmAWR4ab/JqM+p4CCEE7BQlMNcb+0m8C1EdIfCrlJ/3HbS1HfDyBtgk7dq3BPbGT+H1j1jzgGLx7mMy6UTDHVkIIbqGvdrCTsBcT+1eI9MLUSlnWTEgqRnL1lbH07wiaRCdd17cLKMdgPNIuRE+xPuShjpw4OBmDNu2EEJUgT2R/gArJrmYwxRXtiaA62V6ISrlUeCXnvTJNsDBDbPPh4FXeGzvR7btfYr3plavw5Qk5rttIYSosmiwDLCvw+QddwiCSLgv0W0QonK+k/KsByXrk/g4xwLzPHQUymAr4BgHOi1rWNJtTC1ohKq8CyGEyCsaHAi8IPpd33Fx4Xe6BULUgrOYvpR4SPlj30NgOeB/hohJVQn6ZZmsgpcdA3sZ1/f1ZFuDVpspmwk9B0II0TgCzCvitATjgl/L5ELUgmeAk63v+yXHgOQa77sD7xijyOCaHvBTYF3yl4Yc9/zCyC594PQsle+j8t7XcyCEEI1jH+CfrWTkquIVH/cimVyI2vAVhx33iRSxewKwSU6MqIr/wN9eF0FkkzNIWXNfq80IIYTIYk6UTG3iJFtmQSY+1tXAkzK7ELXhNszbMBfCuZcSW16A2YxozZS/r3Ie4FuBIzPOY9QFTfo53wfA59M6MKq8CyGEyOJYYNWCibeMJH6mTC5E7TjGFo4lE6QI9Bdi3sCtWJPr34HJybtldiB6Od+fHXWepnVgNGFVCCFEGm8FDo2+Tntz6qIgc7pDkSCEGI1fAdfmiO5RSRuOFwIbABdgVroqIvpdsTGTS2aGA66hTFEfX9uns65Tw2aEEKLbpFXQ98BUmgYlpbIq7/0oQV0CPGQlQwl4IepBCHwqISxDB20kn/mtgfMzBLyPITQvijouy+Buzk+Q8f2ZmOUhB4r3WZ5uvhBCiHrRTySOdwPnOhLqacSrnX1TOUOI2vJzJqvvQU4cGVcn2sffDrgQM//GJ8sBlwJrWOc0rHDP+59gQEz+6CC79hz1JNJYLN8XQnRYGFctRvPi/HqY6vdJTK504OscFgLflbsIUWv+z4DfuejgT0QxYz7wG48CfjZwMWbojo+4nYyLXwXupoCxfVTeNWxGCNE1etSngjzoPA4H7gS2H/C3AaOvqpB3DqegSrsQdecyJiduuo5VYSJ+vgyz6s2yBQsC4/BTzC6qYeJ8hh3bnvf39jHj2Pog8PEiiQVgaQ83Q6vNCCG6RoD7TY3GYTPgKuDLBZPNuDkgKf7jr4+XqwjRCA7DbN40ynCQcTv92wKXA6tkFATGbbeHWeFltwqLCR+M7FtIvC/j4YSek88LITqGLYarmoCZNiFqP8xKDjcAL01JgoOuJRzxHGZk2ONU4M9yFSEawaPAhwbEliKxxP77onExtAoOf8Dscpr1N6PGyTOAvRx2QpIki9q/peCbDZ/i/Xn5vBCi40K+ynaXBd4VCeUzgZ0HCPI+/t6WflKuIUSjOBE4JyfGuRC+8fHXxGzotlFJxw2AbwFvSbSTNXywrNiYnHf6zqL/ONOjeNeEVSGEBLwZu3k0phIdD6uZGX2OP2ZYH0HiZz3r5zOZrGon/yaw/m4ZJivsgzoTfescXFx7sjJ3EnAP7ibICiHcPMtvB24E1iK94h4WPM6ocWRlzCTWzYGHx7yezwMHFTyniQHxcZQ3DzHvBe4aVrzP8HCzn5W/CyEE2wIvryDZhpY49yna05JZgFlh5iNjJHEhRHU8BbwWM4TF1aIncYU7Ky6thtmJ9RXR+YzCIcCRQ8ShMmNk3BH5OfANKzaGRU5idoEeQRksdnhsIYRoElmrGBT5GOX/8xJPXKEfdzWZQQm4b3UgiBLmE3IFIRrLDcDBGfoxSIkBw1KkoLA5ZgjPKHFrD0s0hyOcZ/I6h50TFAAPYN5iMEwho0f2kJmyKyGLHR5bCCGaKuDHEf5NoJfy+Y9W0hRCNJfTMMPfGCCgXb/RW2CdQ1G2BH6SOI7PlcECzFzQPTFvIYfqfAwS72WjMe9CCFHfjsQ4q8kMIrmD6xLgzTK5EK3hUOCalHjiapRF2lvIgzHjxouwEmYX6aXGjHdF42XWErlvwRQyhp7z41O8a6lIIYToHskVFT4E3CGzCNGqzv8C4HqmDyPx1T7A10ifT5TsRJyNGS9fxdvL+Fw+DJw1qp18indNWBVCiHrjYsy7zaWYrb+FEO3iSeCVwE05otVVvIoF8DlM3cQpyX8C2zHam4FgxPNL7m3xXuDYcS7cp3ifkG8LIURnOwV3A3vLFEK0lscwK7/cxPShIGl7SZRNCMzD7GOR/HkAvA74KOlLOvra1+IgSpjv0wPmeDphDZsRQoh6M8pqCYOqUf3o908Dr8LsziiEaG8nfSEwH7MSTY/pY70DS3+W3XbMAibXbY9ZAfifjI5E8nyy4tqwO8cmK+7vwewoPTY9YGlPN1UTVoUQolvMiAT8HgyxAYkQorGdfzBDaF4BXDWk6B2Vfso5/BemCh/zzUjADxL9LjozMYdF51AKPcxsW9c9sb58euwbL4QQdUzWYU7sfy1mrLtQfhHdIR4D/3MmK/AuVrOKiwTJuLQ8cErU7j7AvhkdiXDIuDZMJybmfcDxZV6wr8r7EvlxKQ4ghBBNoQ/sBpwnUwjRSRZFnffjh+wwllXw3RMzOfTECjRVCDwD7A58vewO80z8TFh9vqQqgcSsEELUnwAzVOYimUKIznMYcC/wxYJaLrm8bDhAIA8SzwFwQuJ7HzoyAB7BvHm40UUDvlabKWOyqoS7KOuhEkKUTz/xjB3B9NfZQohucgyTmygFHvNz2oZOLuJefP4B8Ddg6xThHpZ1rb7E+/PyWwlLIUSrsVeWCDFDZs7FvOEV9UMFMeHb374BvGOA3gkHCO9R2xxGV42yz0XyLcEtwEsjAT9I4431/DWp8t4FsatgKoRoEnEM7mfEsV0HCHgVK5RnRPc4DXjjGGK5bv5un//1mFV2HnJ9Lr7E+2KHNyVo4YcQQjRJCPZSklNoCfgfp8Q2iUihjkg3+RHwthQd50tkD/KnsOCxgsT5Xwdsj9moKnBdrLCXinS5+5Wr1WZ2i86zbR/f1rPd+WAfDAgYSliibvRznrfXAV+QmWoXC5tcLFIsbDbfBfYnf1LquD6S7Bj0S3p27DZuBLYDnhhwLaVe30yyd1gtc/crV2Pe9eCKYbldnRAh4VF6+72MzmdoicSPYV4rf1e3vxYcHX0IURVnYArIJzuKiXk7qZbR+b0d2AF4yqfhfC0V+Zzj47dFyGjIjPxEyBfb0H6YkehOx+y0eqVcQH6onCmAbwFrAp+mvm9T+hmi/2FgR8xQGa80fbUZiTEhhKgvyYmsPcwE1pUlwioX7aGuQ9SEz2J2Yq0raW8WA8xwwPurOiEtFSmEEN3At0hO27Z8ZeAHKT8XQnS3M/lG4IYGdOTj8/sgcHmVvYk5Eu9CCOEt8Fc1UbCfEMl9D21mifIFTG7YIoQQzwJ7YRY4qVrA560A+CvgvxJi3rt4n+2hhyLxLoTosmC3P/cyEoTrjxmJc+lVZI9Y0H8Z2EDuIYSI+AtwZI3OJwQmErH8PibXqR9UoHAu3mdZ37uqxDwnnxRCdJS6LckXJBKSrzaTuwvOBs5E492FEJMcC/yu4rhgz6VI7qD6FiaXhKyMmUyu826fZNmo8i6E6CJpqyccj9mkxE4I4ZjfF0lGM4GNMWsrb5v4XVU22Qp4J2bFiSK2E0K0n0OAm2oYA34IXDJG7C9VvM9k+oLzZTfYly8KITpIaH2OhfYdwKUVJaVfAycA8zGbJu0wZMwfdUOVMMMmAP8POIvpy61JuAvRHew4dDNwKnBgxu9dbuyUdW7PAf82YswrnR6wtIcGJ+SXQghRG2F6GWZ94l0x40zjYS39RHJMO+9hq/55rAAcJ5cQQjHR4siKhHqacAf4PPBAXYzlesJqzBL5pRBC1I4LgPWAT0Xfx5NabYEeJ6++ww7IgZghPUKIbpFVBHiA7BVdfK/v/yTwpToZLTlh1RWqvAshRD0Jgc8B6wAXD0iorlen+ZRuhRCdjD9ZHEM9hl1/EVhUN/G+lMS7EEJ0jqRA/xtm/fXPWL/3WeF6M7C2bosQIuJ+0iez+4yRzzD5BqBW4l3DZoQQonuEGT/7LGbb7zSB7+o84nP5tG6LEMLiPxPf+67En0561b3SJW7zKu9lnZzEuxBCNIefAdtFSctlkkoe+yBgJZlfCBFxF1PXffe1uVzc3okZP6900YG0yrvdqynr5LRUpBBCVMcoAvz3wPbA0w4FfNrKNQfpdgkhLE4cI46Nwy3AnzJiVqX0MKsLJH9WNuOOea/bDnzqjAghmsSoCecPwF5WHPYRi9+t2yWEsPgB1UwYPXNA7Kx82IwPxh02E1Z8/klm6FkSQnSEizAbKfnqZGwEbCOzCyEingfO99heLMx/NIIubZV475ds0KDk4w7bvnb+E0J0iY9iVn5wKdrtuLq/TC6EsDjHgaa0dV2SuzDDZgb9TevF+0RBYxUJ8L7Fc5BoP9AzJIToGCFmh0Ffbb1asVYIYXGuI+2apSd/U5HmrJV4X1LQWFWQN44zrPG5CyGEL/4bU313LaoDzK6vq8rkQoiIh4C/Rl+XPeqib32O49sVdTZGU8a8DwrytgAf5YMhjyGEEF0kBE7y2N6rZXIhhMW1kQ4rW7v2IuFuH/dSiffy26lqzDsS8EKIDnNCyXGwn/i6z+TbzQUytxDC4mqHx7YXIlkE3FFnQ8z01E7Zq7PEwf1C/K44s7Vj5xHqeA37DAjhkwcxq8/sVNLxehlfg1acUSxULBRTuSnR2Xc19v22uhuiqeK9qgdXVff6JqGifnAkZixb/JqsiYnqW8D6SlqiIs4qUbwP8vMNgFnAYpncScz8AvDLBue1EDgOU1Szc0DZok7Uh7ssH3Z5j2+re35tg3ivIuiJ5nIdcEnDfXCRbqOokHOYHD7jmhcDN8jkTrgZ+G3DY+HjCeFu/07FjfbxF8fH70d69Za6G8JX71SbGglXhAWCtCYbC1Ee9wJ/9/RMbSJziwGxP0189STcW8si4FFHHUFbEz8i8S7xLpoh8JuEOiKianwto7auTK24MaKmUZxspw8v9NARfELiXeJdiLITr6pKomqu9CSQVpapnQkUxUnRtA5niJtho4HEe7XtCKHEK4R7bvXUzgsHJFgh5Bvdy3tPemjnKYl3w0z5oFCwF6I13OmpnRXVgS2NfouvLWTqHgGivff5WZlBw2aEkpY6G0IMz12e2llJpnYqhKRnRNN4SibwL94DCRFREz9vWuJSRUnUrUP8qId2VpCpncVB5WHRRJ6R/7oX77HgmJX4vklCJG0CTF+BTwjRcR7w0MZyirVCCIunG6gjnYj35wf0xMsKmnMabKMwxR5aR1YI0WVC4GEP7SwlUwshLCZkAiNCn8kQqmWynEwthBCt4kkPbcxKfK8qvBDdRoXTSLw/68FIy8pphBCiVSzx0MZsxWAhhIUq75F4jxe8d7kix5yW2EtVHyGEMCxWzBVCeGaJTDBVvLucvKphM0IIIYZFVTYhhE1fJpgq3l2yrEwthBCNI8j4GrSMoxDCP6q8M7naTDJAl92zaduwGdevcjWuUwhRB8KMrwNgGQ/tL9YtEEJY6G0c6RNWQ8ofQrNMS+ylRCKEEIblPbTxJCpmCCEmmSETGJH+hOM2QtpTeU9uNuUKTdISQtSdNT2JdyFEN0nTQjNlFiPeH/PUVhsEfNjw4wshRBkJdDYw10PbC2V+ITpLWDAedVK8P+6prRVbYK+JCh1WCCHqkkDX99T2I4mk7WvekRCinqjynhDvroPh2i2wl8ZaCSEEbOapnbsTnYhwQIdCCNF+1HFn+rAZF0aJV65ZQ+aWcwohWhGPNvUkoh+Q+YUQFiqi4mfCai8K8G2ovGuiqhCia6TFPV+V97/J/EIIiffpwvpRD+I0ADbMaL/JSSwo2UYx2kFMCFFXAmDnEvPFoDh6u8wthBDTxbOv2fwLUoJ0v4H2wkNn5zm5phCiJkI9yZbAciW2kRZH49xws26BEMJCE1YjMXqvp7b+GVil4clrWYft2AnsCTSERghRPWnCencP7c4A7gOe1i0QQljMkgn8ifc4AezS8OS1iac2H0KrKQgh6kVcUNjXU9z9k0wuhJB4Txfvz+F+0mocjPdreOLazWFCtCvtf5ZrCiFqRoh5e7qVh1gbAFegN5BCiKlo2AyTY7h9TQp6LbB8Q201F3hN9HWZY/XT1i2+Va4phKghb3cs2m0uQ28ghRAS76niPQSuS/ndsAI1oFiVZP+G2uoQJjcJcblKziLgNrmmEKJmBMAR0dcuRHXymFfI5EKIBBo2Y4nQawf8bpjAWySgv5fmvQpdEfiEp/P+Nao2CSHqxxuBNT3Fp8vRZFUhxHRUebcE+p8SP3cpUjdhcsJTWjt1FPafwSyNNmH9zNUyl+fLLYXoBE0qYswEvujg3LPe2J6LihhCiOnxQpV3S7xfgZ811+NgfHR0E8IBf1MXNgH+LWGv5NdlJvCfyi2FaCVhzWPdID4IrOvx3M+TuwghMgoJEu/R5wngd5GQ7FuBuUxBH1hBf2PggIbY6PQBHY0ybRMAN2K2A9cKC0K0j6CBoh1gHeCzFB8aOWyHJkzY6K+kD+UUQgjpI6ZWjy+xftZP+f2o9BMJKzb8V6n/pk2fxiyL5iPZhsBpDU3uQoj25ogfAEt7bPMMmV0IkYEq7wlx/hNLXPdyej3BiG3EwjTELL14Wo17cTtjxrqHA2xQhsi2OzXfkksK0UiGiYtBg67pv4GXMr067jIWf1vuJITIYGmZYKqw/hNmyIZPdgfeU7EN0gT4psCPc/5nouQk9lPg0QYmeCFEOzsj38KsDuaz43EV8BeZXwiRwWyZYKp4D4HvFRS7ZVacTwT2yjgnn4kqZm3Mco1zc5JWWecZ2+HLckchGouL8eBVJsdfAAclYlTyOsuYE5V8Y3Ecw7/dFUJIvHdWvAOcXEHCAzgbM0ylrIQw6nmsh5m4O2/A3wQZYn6ce3Aj8JuM9oQQwhdbATcDuxWIQ2UWWgLgPuBHLesICSHKZSmZYHrwvQszcdVn1SMO0ucCe1doi00xG4OskdOJCMcQ1/2UhAXw73JFITpDHYVpABwL/AFTxPBxnv1EG19m6l4aqr4LISTeC4h3gK9VEDhDzKuQn2B2MsVzAH8HZqzlKkxWfXoO7W2L+DsxqzkIIYQLUZ7HizFznj5oxePQQ/t2jF0InNCATo4Qolo0bCZDoP4QuKOCBBMH6s9hJm+uWXIAT0siG0VtnQrMIXtsp0u7fzylHVWchOi2oC6LMKPNANgSOAe4Bdg85e+DEtvP42jgabmGEELifTTxHgKfLJBkyhybPpEI9K/FDOE5usQbZSeR9THV7lujtuxzcJFcA9KHzNxCetVdFSch2ivUwwo66HZM2Rm4EPgj8Drr92FF9nkA+C+5ihBC4r0YWYvdfz8S8JsOSDRlDCuJK+69xPcAs6JzeD/wH5hXqs+N2daC6Hj7pCS1XsrP0tZyH2WXxOQ1xhwiFxSi1UxYz34cS/cEVs4R++GI32cdby7wEmA+U9dJDgfE5TLoM3W4YC/l3I5SwUIIIcYX70Qi9+Io2PoKrGHK1ythJlJ9HDgTs4TZhcCzOR2CmPnAvwLvAjbOSKpFzodEAh61oxJzCnCpXFCIVpO2Sd2uwB4VnU9ehb1PufN9ZpBeIIn5bRQLhRAiTz/1ZIp88X4JZgLpPgyuxIxSiSbnf+z2YrG8EvC+6APgeswkq79Yf7cspqK1CrAasPWANntjnP+4nZn7gQ+MIPiFEM3EFsU9K66N+3lQjEr+fRFhXnZyHBS/ngbeKNcQQhSMIzNkinzxDnA48GomxxiVXZUpKljTEsDmTE6ySias5P/kCeB+IhG6EM32ue0PPOGhkyCEqAe9AWI+HPNzXvwIHQnzUWN6HAffDzwo1xBCFETivWAwvxv4iBVwZ1iJx04QZYrMcIi/CzMSWjjEuaVVsMoc75nkRMywHyGEYm/TyVuVJinc46+/B5wmNxBC5MQPm5kySfEEcjxwdSLw1i3xhA2wb4BZgvMwuZ0QoiMkJ9b2gJswe2vozaIQYtj4IQoaIgReDzyJ1h8fp/e4GNgLeF7mEEK0KLmGBf8uiPLIblE8FEKIsjWrDGFxD5MTiyTghxfuYCrut8gcQoiOxsElmFV27pU5hBBDFglAw2ZG6sWcD3yqgIAva2e+piYo+/rjz2cC35C7CSE6hj3v5/XA72USIYQHzSpDWHwOM9EoT8B3UbTbvUP7Z7cAB8lEQogOMiOKhe8HfiZzCCHGQJX3MXoxbweuGPD7QWMg2yr401ZTCDHLoO2M2VBKnR0hRJeIY97Hga/JHEKIMZmQCUYX733MDoFXMtwQmbaK137GzxcBC4B/pAh8IYTognB/L/B5mUMIIfHuX7wnhfeTkTC9fAhhXvZ68FUmpSDFhn3r988AL8csiSaEEG2gT7GCTfz7d6K5PkKI8ggH6FKJ9xyDxTwD7ARcNKIhgxbaMsDsnDofuEHPmRCiQ/kiFvaLgb2BU2QyIYQD8d6WYrBz8Z7FIsyavd8fUpAHDTZ8SPqrmwBYiKm4X6dnTAjR0uQZMn24YBz77wVeApwjUwkhHIn3Lq9qOJR4H/R3E8CbMSvRFDVq2CK7xdd7LbAFWstdCNGd3GHH+58AmysGCiEcMdEiHelFvGdVWWw+BbwUuHPA3/QbbKtgwM++AmwF/FXPlhCiI8Tx7xHMJn6vBx6VWYQQjnhewn048Z4Ur1mGuwbYEDjW+p9gxPbqRnKiRAA8DbwW+ICeKSFEx0Q7wEnABsCPZBYhhCfxrmEzI4rXvL/7MGZ98wcThm6SsbPON/7Z5VFH5ed6noQQLRTog+LfFZghMocAj8lcQggP9EfQpJ0X74OCfBoXAS/GDCkp8vdNSGQBZkLWmzEryvxDz5IQogMiPv64HtiH/BW1tCmdEMIFz8kE5Yj3Qb2fxzBDSlYDTkwJ7EFGr6qf0dMapzMxqAeXdV2hdbyFmDcKazC5uo6oj7gQ5dlTtM8WQc73/Zy4fhHmbepLgLPHzAti+HtWRpwLWm4rxa5u8Lzj56wz4r0I9wOHAqsAx2DGigcpD10v8bmfco5FRHdewApyrt2uNN0fifZVmRzLLySeRPv8LGixAA1zvu8xvco+AZwObBYJ94v0bDYu3gUt9eeqhLz8vvo49qzD2NiYZ8T3BNKHgY9hKvGHAbfmPBS9FNGedc79gkkr7wbF53EdcDDwT5Fof1bPjfdgGBZ88FTlUzIa5/rDFoubfsH7b/vBI1HMWx04gKk7RQcdE4J16WCNGufCDtnOvtaJkmOg/L4+3CkTwMyK2n0SOB74b8za6IcA+wNzBjyYeR2NYTsiaQ/sQuC70XndLPeoRESqsjFcMg5KtL3s2T57zCh4//8GnAX8GDMZP0ssSryoY92EvDGj4HNfNO/I7+vDMZg9Jcr2o7DAzzov3u0H4lrMkJoPYHZr3QF4FbBlASPaw2r6BQV88iF93Epa541wg0U54iltyILr18hK7qKrPI0ZBnMhcAFT34IKdQ6a3Pl2ce2KtfXhbOB2zBK1LnVIrbVesGCzHX0FiXDIv58NbA+8AtgGU6FfI8f4RR6w64A/AjcClwFXSpDXgo2BeSkPTZDxcA36PqsHHWBWyGj6RjJbA8smfD4cw15ZNr8KWNQhH1wRs/xhnn0Y0z+r+v4ZzJCYRzBvPyH7TY5iYnVsgBmuGTr0B6IO2wMNt9VmwMoF4/+geJeXT/4EPCHXrLSjGVqfDwROKVm828/GLlFho/PivSyWi4T8SzATSJeLREz8eSZm6Mtj0ecHgXswO5/+JfpaCCGE+yKMEPJ94YIZmGW7X+To+BLvLXho9NC2M/Dqvgo9B4qHQohmx7SySXvjVTtmNuDmhB1vX7i5h7qvQs+B4qEQotsxrZFxrqd7L4QQQgghRDOQeBdCCCGEEELiXQghhBBCCCHxLoQQQgghhMS7EEIIIYQQQuLdHQHa/UwIIYQQQki8CyGEEEIIIerC/wfRc6WyY2mqswAAAABJRU5ErkJggg==" width="200" height="55" alt="GABAY">
+  <span class="tag">הדרכה והכשרה — גבאי AI</span>
+  <p class="sub">סיכום קורס Microsoft Copilot להנהלת חשבונות · נובמבר 2026</p>
+</header>
+
+<nav class="nav" aria-label="ניווט בניוזלטר">
+  <div class="wrap">
+    <a href="#learned">מה למדנו</a>
+    <a href="#builder">בונה הבקשות</a>
+    <a href="#library">ספריית הפרומפטים</a>
+    <a href="#followups">משפטי המשך</a>
+    <a href="#tools">כלים ותבניות</a>
+    <a href="#mistakes">שימו לב</a>
+    <a href="#checklist">צ׳קליסט</a>
+    <a href="#tips">טיפים</a>
+  </div>
+</nav>
+
+<main>
+<div class="wrap">
+  <div class="hero">
+    <div class="hero-grid">
+      <div>
+        <h1>הקורס נגמר? הכלים נשארים אצלכן.</h1>
+        <p class="lead">בשלושה מפגשים עברנו מ״מה זה AI?״ ועד <b>בדיקה עצמאית של ריצת תשלומים אמיתית</b>. כאן מרוכז כל מה שחשוב, <b>בשלוף</b>: בונה בקשות, 35 פרומפטים להעתקה בלחיצה, צ׳קליסט ועוד – כדי שלא תצטרכו לחזור למצגות.</p>
+        <div class="ctas">
+          <a class="btn btn-primary" href="#library">לספריית הפרומפטים</a>
+          <a class="btn btn-sec" href="#builder">לבנות בקשה משלי</a>
+        </div>
+      </div>
+      <div class="anat" aria-label="מבנה של בקשה טובה">
+        <span class="cap">ככה נראית בקשה טובה</span>
+        <p class="q" id="anatQ">״<mark data-k="0">כתוב מייל קצר לספק</mark> <mark data-k="1">שקיבל פחות בגלל ניכוי במקור,</mark> <mark data-k="2">לפי השורה שלו בקובץ המצורף.</mark> <mark data-k="3">טון ענייני, בלי פרטי בנק, עד 6 שורות.</mark>״</p>
+        <div class="legend" id="legend">
+          <button type="button" data-k="0" aria-pressed="false"><b>מטרה</b><span>מה רוצות לקבל</span></button>
+          <button type="button" data-k="1" aria-pressed="false"><b>הקשר</b><span>מי, למה, על מה</span></button>
+          <button type="button" data-k="2" aria-pressed="false"><b>מקור</b><span>על מה לעבוד</span></button>
+          <button type="button" data-k="3" aria-pressed="false"><b>ציפיות</b><span>אורך, טון, מבנה</span></button>
+        </div>
+        <p class="hint">לחצו על רכיב כדי לראות אותו בבקשה.</p>
+      </div>
+    </div>
+    <div class="nums">
+      <div><b>3</b><span>מפגשים</span></div>
+      <div><b>6</b><span>שעות</span></div>
+      <div><b>10</b><span>משתתפות</span></div>
+      <div><b>35</b><span>פרומפטים מוכנים</span></div>
+    </div>
+  </div>
+</div>
+
+<section class="blk" id="learned">
+  <div class="wrap">
+    <div class="shead"><div><h2>מה למדנו</h2><p>Copilot חוסך את רוב העבודה השחורה – אבל עובד טוב רק כשמבקשים נכון ובודקים לפני שסומכים. <b>האחריות נשארת שלנו.</b></p></div></div>
+    <div class="sessions">
+      <div class="card">
+        <span class="step-num">#1</span><span class="step-lbl">מפגש</span>
+        <h3>מאפס לקופיילוט</h3>
+        <p>הכרנו את <b>Copilot Chat</b> בחשבון העבודה, למדנו את <b>ארבעת הרכיבים</b> של בקשה טובה, וכתבנו מיילים לספקים וסיכומי מסמכים.</p>
+        <p class="note">💡 בכל בקשה: מטרה, הקשר, מקור וציפיות.</p>
+      </div>
+      <div class="card">
+        <span class="step-num">#2</span><span class="step-lbl">מפגש</span>
+        <h3>קופיילוט + אקסל</h3>
+        <p>ביקשנו <b>נוסחאות במילים</b> במקום לזכור פונקציות, <b>ניקינו ייצוא מפריוריטי</b>, פענחנו נוסחאות קיימות, וכתבנו ניתוח ותקציר למנהלת הכספים.</p>
+        <p class="note">💡 בבקשת נוסחה: גיליון, כותרות, עמודות, מה רוצות, ומה אם לא נמצא.</p>
+      </div>
+      <div class="card">
+        <span class="step-num">#3</span><span class="step-lbl">מפגש</span>
+        <h3>קופיילוט בעבודה</h3>
+        <p>שישה הרגלים חדשים, ו<b>משימת סיום עצמאית</b> על ריצת התשלומים של 15/11: 90 העברות, 53 ספקים, ותשלום אחד עם מע״מ שלא תאם.</p>
+        <p class="note">💡 ההפתעה נמצאה רק אצל מי שבדקה את כל השורות.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="builder">
+  <div class="wrap">
+    <div class="shead"><div><h2>בונה הבקשות</h2><p>ממלאות ארבע שורות – ומקבלות בקשה מוכנה להדבקה. השדות הריקים לא ייכנסו.</p></div></div>
+    <div class="builder">
+      <div class="card">
+        <label class="field"><span class="lab">מטרה <small>מה רוצות לקבל</small></span><textarea data-b="0" placeholder="למשל: כתוב מייל קצר לספק"></textarea></label>
+        <label class="field"><span class="lab">הקשר <small>מי, למה, על מה</small></span><textarea data-b="1" placeholder="למשל: חשבונית 5512 מ-14/07 רשומה אצלנו פעמיים"></textarea></label>
+        <label class="field"><span class="lab">מקור <small>על מה לעבוד</small></span><textarea data-b="2" placeholder="למשל: לפי גיליון ׳ספקים׳ בקובץ המצורף"></textarea></label>
+        <label class="field" style="margin-bottom:0"><span class="lab">ציפיות <small>אורך, טון, מבנה</small></span><textarea data-b="3" placeholder="למשל: טון ענייני, עד 6 שורות"></textarea>
+          <span class="quick" id="quick"></span>
+        </label>
+      </div>
+      <div class="card preview">
+        <h3>הבקשה שלכן</h3>
+        <div class="meter" id="meter"><i></i><i></i><i></i><i></i></div>
+        <p class="meter-txt" id="meterTxt">0 מתוך 4 רכיבים</p>
+        <p class="out empty" id="out" aria-live="polite">הבקשה תופיע כאן בזמן שאתן כותבות.</p>
+        <div class="row-btns">
+          <button class="act pri" id="bCopy" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span>העתקת הבקשה</span></button>
+          <button class="act" id="bClear" type="button">ניקוי</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="library">
+  <div class="wrap">
+    <div class="shead"><div><h2>ספריית הפרומפטים</h2><p>35 פרומפטים משלושת המפגשים. <b>העתקה</b> – כמו שהוא. <b>מילוי והעתקה</b> – ממלאות את הסוגריים כאן, ומקבלות בקשה מוכנה. ⭐ שומר למועדפים שלכן.</p></div></div>
+    <div class="tools">
+      <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="חיפוש: מע״מ, כפול, ספק, טבלת ציר…" aria-label="חיפוש פרומפט"><kbd>/</kbd></label>
+      <div class="chips" id="chips" role="group" aria-label="סינון לפי נושא"></div>
+    </div>
+    <p class="status" id="status" aria-live="polite"></p>
+    <div class="lib" id="lib"></div>
+    <p class="empty" id="empty" hidden></p>
+  </div>
+</section>
+
+<section class="blk" id="followups">
+  <div class="wrap">
+    <div class="shead"><div><h2>משפטי המשך</h2><p>התשובה כמעט טובה? ממשיכות באותה שיחה – משפט אחד מתקן. לחיצה מעתיקה.</p></div></div>
+    <div class="fups" id="fups"></div>
+  </div>
+</section>
+
+<section class="blk" id="tools">
+  <div class="wrap">
+    <div class="shead"><div><h2>כלים ותבניות</h2><p>מה שכדאי שיהיה פתוח ליד – בלי לחזור למצגות.</p></div></div>
+    <div class="two">
+      <div class="card">
+        <h3>ארבע נוסחאות שכדאי להכיר בשם</h3>
+        <ul>
+          <li><span class="en">XLOOKUP</span> / <span class="en">VLOOKUP</span> – להביא נתון מטבלה אחרת</li>
+          <li><span class="en">SUMIFS</span> – לסכם לפי תנאים</li>
+          <li><span class="en">COUNTIF</span> – לספור ולמצוא כפולים</li>
+          <li><span class="en">IFERROR</span> – להעלים <span class="en">#N/A</span> מהדוח</li>
+        </ul>
+        <p class="note">לא צריך לזכור איך כותבים אותן – רק <b>לתאר את הצורך ולבקש</b>.</p>
+      </div>
+      <div class="card">
+        <h3>שמונה כללי זהב</h3>
+        <ol>
+          <li>מטרה, הקשר, מקור וציפיות</li>
+          <li>שיחה חדשה לכל נושא</li>
+          <li>מתחילות מהצורך, לא מהפונקציה</li>
+          <li>קופיילוט כותב נוסחה – אקסל מחשב</li>
+          <li>כל נוסחה על 5 שורות ידועות</li>
+          <li>משפרות באותה שיחה</li>
+          <li>מה שלא בקובץ – בודקות במקור</li>
+          <li>מה שעבד – נשמר כתבנית</li>
+        </ol>
+      </div>
+    </div>
+    <h3 style="margin-top:30px">ניקוי ייצוא מפריוריטי: הבעיה והתיקון</h3>
+    <div class="tblw"><table>
+      <tr><th>הבעיה</th><th>איך זה נראה</th><th>התיקון</th></tr>
+      <tr><td>מספר שנשמר כטקסט</td><td>הסכום לא נסכם, הנוסחה מחזירה שגיאה</td><td>״המרה למספר״ מהמשולש הירוק, או <span class="en">VALUE</span></td></tr>
+      <tr><td>מינוס בסוף המספר</td><td><span class="en">4,520.00-</span> לא מזוהה כשלילי</td><td>נתונים › טקסט לעמודות › מתקדם › מינוס בסוף מספרים שליליים</td></tr>
+      <tr><td>תאריכים כטקסט</td><td>אי אפשר למיין או לסנן לפי חודש</td><td>נתונים › טקסט לעמודות › תאריך › יום/חודש/שנה</td></tr>
+      <tr><td>רווחים מיותרים</td><td>״1043״ ו-״1043 ״ לא נמצאים בשליפה</td><td><span class="en">TRIM</span> על העמודה</td></tr>
+      <tr><td>שורות ״סה״כ״ באמצע</td><td>הסכום יוצא כפול</td><td>מסננות לפי ״סה״כ״ ומוחקות</td></tr>
+      <tr><td>כותרות ממוזגות</td><td>כמה שורות כותרת, תאים ממוזגים</td><td>מבטלות מיזוג, משאירות שורת כותרת אחת</td></tr>
+      <tr><td>עמודות מיותרות</td><td>עשרות עמודות, חלקן ריקות</td><td>שואלות את קופיילוט מה נחוץ, ומוחקות בעותק</td></tr>
+      <tr><td>אותו דבר בשני קודים</td><td>״כללי״ גם ב-000 וגם ב-0000</td><td>מאחדות לקוד אחד לפני סיכום</td></tr>
+    </table></div>
+    <p class="note">🔑 לפני הכול <b>שומרות עותק</b> של הייצוא. אחרי כל תיקון בודקות שהסכום <b>עדיין שווה ליתרה בפריוריטי</b>.</p>
+  </div>
+</section>
+
+<section class="blk" id="mistakes">
+  <div class="wrap narrow">
+    <div class="shead"><div><h2>שימו לב: טעויות נפוצות</h2><p>לחצו על טעות כדי לראות מה עושים במקום.</p></div></div>
+    <div class="warn">
+      <details><summary>⛔ לסמוך על סכום שחושב בצ׳אט</summary><p>קופיילוט כותב נוסחה, ואקסל מחשב. תמיד. מבקשות נוסחה ושמות אותה בגיליון.</p></details>
+      <details><summary>⛔ לא לבדוק את הנוסחה</summary><p>בודקות על 5 שורות שהתוצאה שלהן ידועה, ועל מקרה קצה אחד: תא ריק, ספק שלא קיים, סכום שלילי.</p></details>
+      <details><summary>⛔ למחוק ״כפילות״ בלי לבדוק</summary><p>אותו ספק ואותו סכום יכולים להיות שני פרויקטים שונים. חריגה היא לא בהכרח טעות – מסמנות ובודקות במקור.</p></details>
+      <details><summary>⛔ לשאול אותו על מה שהוא לא רואה</summary><p>המסכים של פריוריטי שלנו, חוק ומיסוי עדכני והנהלים הפנימיים – שם הוא מנחש בביטחון. ככל שהתשובה נשמעת בטוחה יותר, בודקות יותר.</p></details>
+      <details><summary>⛔ להעתיק מספרים מהתקציר בלי השוואה</summary><p>כל מספר בתקציר – מול הטבלה שלכן, לא מול הצ׳אט.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="checklist">
+  <div class="wrap narrow">
+    <div class="shead"><div><h2>צ׳קליסט: לפני שמעבירות דוח הלאה</h2><p>מסמנות תוך כדי עבודה. הסימונים נשמרים בדפדפן שלכן עד שמאפסות.</p></div></div>
+    <div class="check" id="check">
+      <div class="prog"><div class="bar"><i id="bar"></i></div><span id="pTxt">0/6</span></div>
+      <label class="ci"><input type="checkbox"><span>✅ שמרתי עותק של הייצוא המקורי</span></label>
+      <label class="ci"><input type="checkbox"><span>✅ הסכום אחרי הניקוי <b>שווה ליתרה בפריוריטי</b></span></label>
+      <label class="ci"><input type="checkbox"><span>✅ כל נוסחה נבדקה על 5 שורות ידועות</span></label>
+      <label class="ci"><input type="checkbox"><span>✅ בדקתי את העמודות, התקופה ואיך טופלו תאים ריקים</span></label>
+      <label class="ci"><input type="checkbox"><span>✅ כל מספר בתקציר תואם לטבלה שלי</span></label>
+      <label class="ci"><input type="checkbox"><span>✅ חריגות סומנו לבדיקה – לא ״תוקנו״</span></label>
+      <p class="done" id="done">הכול מסומן – הדוח מוכן להעברה.</p>
+      <div class="row-btns"><button class="act" id="cReset" type="button">איפוס הצ׳קליסט</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="tips">
+  <div class="wrap">
+    <div class="shead"><div><h2>טיפים מהירים</h2></div></div>
+    <div class="tips">
+      <div class="card"><p>💡 <b>צילום שווה פסקה של הסבר.</b> <span class="en"><kbd>Win</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd></span>, ואז <span class="en"><kbd>Ctrl</kbd>+<kbd>V</kbd></span> בצ׳אט. כל מספר שחולץ מתמונה – בודקות מול המקור.</p></div>
+      <div class="card"><p>💡 <b>רוצות פורמט מסוים?</b> מדביקות דוגמה: מייל שעבד, או שתי שורות מהטבלה שרוצות לקבל.</p></div>
+      <div class="card"><p>💡 <b>בקשה שחוזרת כל חודש?</b> שומרות אותה בקובץ ״הפרומפטים שלי״ – או מסמנות ⭐ בספרייה – ומשנות רק את מה שבסוגריים.</p></div>
+      <div class="card"><p>💡 <b>שיחה חדשה</b> כשהנושא או הקובץ מתחלפים – או אחרי שלושה סבבים שלא מתקדמים.</p></div>
+      <div class="card"><p>💡 <b>לא בטוחות מה לבקש?</b> ״לפני שאתה עונה, שאל אותי עד 5 שאלות. שאלה אחת בכל פעם.״</p></div>
+      <div class="card"><p>💡 <b>בדף הזה:</b> מקש <kbd>/</kbd> קופץ לחיפוש בספרייה מכל מקום.</p></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <p class="big">קופיילוט עוזר מצוין – והאחריות נשארת שלנו.</p>
+  <p>שאלות, הצלחות או פרומפט שאתן גאות בו? <b>עומר ויובל, מחלקת AI קבוצת גבאי</b></p>
+  <p><a href="mailto:omer@gabaygroup.com" class="en">omer@gabaygroup.com</a> · <a href="mailto:yuval@gabaygroup.com" class="en">yuval@gabaygroup.com</a></p>
+  <a class="btn btn-primary" href="mailto:omer@gabaygroup.com,yuval@gabaygroup.com?subject=%D7%A9%D7%90%D7%9C%D7%94%20%D7%A2%D7%9C%20Copilot">כתבו לנו</a>
+  <p class="sign">GABAY AI</p>
+</footer>
+
+<button class="top" id="top" type="button" aria-label="חזרה למעלה"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const CATS={mail:"מיילים ומסמכים",quick:"שאלות מהירות",clean:"ניקוי ייצוא",formula:"נוסחאות באקסל",check:"בדיקות שגרתיות",analysis:"ניתוח ודיווח",tables:"טבלאות וגרפים",unsure:"כשלא בטוחות"};
+const P=[
+["mail","מייל לספק על פער","כתוב מייל קצר ומנומס לספק [שם]. בכרטסת שלנו היתרה [סכום] ובדף החשבון שלו [סכום]. בקש פירוט חשבוניות ותשלומים מ-[חודש] עד היום. טון ענייני, עד 6 שורות."],
+["mail","הודעה לספק על תשלום וניכוי במקור","כתוב מייל קצר לספק [שם]: ב-[תאריך] העברנו לו [סכום נטו]. סכום התשלום היה [סכום], ונוכה במקור [סכום] ([אחוז]%) לפי אישור הניכוי שלו. טון ענייני ומנומס, בלי פרטי בנק, עד 6 שורות."],
+["mail","חשבונית שנראית כפולה","כתוב מייל קצר לספק [שם], איש קשר [שם]. חשבונית [מספר] מ-[תאריך] על סך [סכום] רשומה אצלנו פעמיים. בקש לאשר שמדובר בחשבונית אחת. מנומס, בלי להאשים, עד 6 שורות."],
+["mail","תזכורת על מסמך חסר","כתוב תזכורת שנייה ל[שם] על [המסמך] שחסר לנו מ-[תאריך]. מנומס אבל ברור, עם תאריך יעד [תאריך], ובלי להאשים."],
+["mail","סיכום מסמך ארוך","סכם את המסמך המצורף ב-5 נקודות: מה נדרש מאיתנו, סכומים, מועדים וסיכונים. ציין ליד כל נקודה את הסעיף במסמך, כדי שאוכל לבדוק."],
+["mail","כתיבה בסגנון שלי","הנה מייל ששלחתי וקיבלתי עליו תשובה מהירה: [מדביקות]. כתוב באותו סגנון ובאותו אורך מייל ל[שם] על [נושא]."],
+["quick","קובץ חדש","תאר לי את הקובץ המצורף: אילו גיליונות ועמודות יש בו, ומה כל עמודה מכילה?"],
+["quick","סינון מהיר","אילו [חשבוניות] בקובץ גבוהות מ-[50,000] ₪?"],
+["quick","ספירה מהירה","כמה שורות יש לכל [ספק]?"],
+["clean","זיהוי בעיות","אלה הכותרות ו-10 השורות הראשונות של ייצוא [שם הדוח] מפריוריטי: [מדביקות]. זהה בעיות שעלולות לפגוע בסכומים – מספרים כטקסט, תאריכים, רווחים, כפילויות, שורות סיכום. הצג בטבלה: סוג הבעיה, העמודה, דוגמה, ההשפעה ותיקון מומלץ. אל תתקן עדיין."],
+["clean","עמודות מיותרות","מצורף ייצוא [שם הדוח] מפריוריטי. אני רוצה [מה רוצות לבדוק או לסכם]. אילו עמודות נחוצות לזה, ואילו ריקות או מיותרות? זהה גם קודים לא אחידים, או אותו פריט בשני קודים. הצג בטבלה. אל תתקן עדיין."],
+["clean","מינוס בסוף המספר","בעמודה [F] סכומים מפריוריטי כטקסט, והשליליים עם מינוס בסוף, למשל 4,520.00-. תן לי נוסחה לעמודה [G] שתהפוך אותם למספרים אמיתיים, כולל הסימן הנכון."],
+["clean","רשימה לחודש הבא","סכם את כל צעדי הניקוי שעשינו לרשימה אחת, ממוספרת, שאוכל לשמור ולהריץ כל חודש על אותו דוח."],
+["formula","שליפה מגיליון אחר","בגיליון [שם] עמודה [A] מספר ספק, בשורה 1 כותרות. בגיליון [ספקים] עמודה A מספר ועמודה B שם. תן נוסחה לעמודה [G] שתביא את שם הספק, ותשאיר ריק אם לא נמצא. הסבר בעברית."],
+["formula","גרסה ישנה של אקסל","תן לי את אותה נוסחה עם VLOOKUP."],
+["formula","להעלים #N/A","הנוסחה שלי מחזירה #N/A כשלא נמצא ערך: [מדביקות]. עטוף אותה כך שתציג תא ריק במקום שגיאה."],
+["formula","סימון לפי כלל","בעמודה [C] תאריך חשבונית. סמן ׳לטיפול דחוף׳ מעל [90] יום, ׳לבדיקה׳ [60–90], אחרת ׳תקין׳ – נכון לתאריך שבתא [J1]. תאריך ריק – השאר ריק. הסבר לפני הנוסחה."],
+["formula","סיכום לפי תנאים","מספר ספק בעמודה [A], תאריך בעמודה [C], סכום בעמודה [E]. תן נוסחה שמסכמת את הסכומים של הספק שבתא [I1], לחודש שהתאריך הראשון שלו בתא [I2]."],
+["formula","איתור כפילויות","תן נוסחה לעמודה [H] שתכתוב ׳כפול׳ רק כשגם מספר הספק, גם מספר החשבונית וגם הסכום זהים לשורה אחרת."],
+["formula","פענוח נוסחה קיימת","הסבר לי בעברית פשוטה, שלב אחר שלב, מה הנוסחה הזאת עושה: [מדביקות]. מתי היא עלולה לתת תוצאה שגויה? ואפשר לכתוב אותה פשוט יותר?"],
+["check","בדיקת מע״מ","בעמודה [אות] סכום התשלום כולל מע״מ, ובעמודה [אות] סכום המע״מ. תן נוסחה שתכתוב ׳לבדיקה׳ אם המע״מ שונה ביותר מ-1 ₪ מ-18/118 של הסכום, ו׳תקין׳ אם לא. הסבר לפני הנוסחה."],
+["check","בדיקת ניכוי במקור","בעמודה [אות] סכום התשלום, בעמודה [אות] ניכוי מס במקור ובעמודה [אות] נטו לתשלום. תן נוסחה שתכתוב ׳תקין׳ אם נטו + ניכוי שווה לסכום התשלום, ו׳לא תואם׳ אם לא."],
+["check","התאמה ליתרה","איך אני בודקת שסכום עמודה [אות] אחרי הניקוי שווה ליתרה שמופיעה בפריוריטי? תן לי נוסחה ושלבים."],
+["analysis","ניתוח מלא","כדי להכין עדכון ל[שם המנהלת], נתח את [הנתונים] ב[תקופה] לפי [פרויקט/ספק]. השווה בין [תקציב] ל[ביצוע]. הצג טבלה מסכמת, שלוש תובנות ושתי שאלות לבדיקה. לכל תובנה ציין את המספרים שעליהם היא מבוססת, והפרד בין עובדה לפרשנות."],
+["analysis","ניתוח מדויק","בגיליון [שם], לתקופה [תקופה], סכם את [העמודה] לפי [ספק]. החזר טבלה, וציין כמה שורות נכללו, כמה הושמטו ולמה."],
+["analysis","תקציר למנהלת","כתוב תקציר של עד 120 מילה ל[שם]: תמונת מצב, 2–3 ממצאים, חריגה אחת שדורשת תשומת לב, מה חסר, ופעולה מומלצת."],
+["analysis","פסקת הסבר","על בסיס הטבלה הזו, כתוב 3 משפטים למנהלת הכספים: מה השתנה מהחודש הקודם ומה דורש תשומת לב."],
+["analysis","בדיקת המסקנה","לכל תובנה שנתת: אילו נתונים תומכים בה, מה יכול להפריך אותה, אילו נתונים חסרים, ומה צריך לבדוק לפני שמשתמשים בה?"],
+["tables","טבלת ציר","הסבר לי שלב אחר שלב איך לבנות טבלת ציר של [הוצאות] לפי [פרויקט] ו[חודש] מהגיליון הזה."],
+["tables","סימון חריגות","איך אני צובעת בעיצוב מותנה כל סכום מעל [100,000] ₪, וכל תאריך שעבר יותר מ-[60] יום?"],
+["tables","בחירת גרף","אני רוצה להציג [מה] ל[שם המנהלת]. איזה גרף הכי מתאים, ולמה? הסבר איך בונים אותו באקסל."],
+["unsure","משימה חדשה","אני צריכה [המשימה]. לפני שאתה עונה, שאל אותי עד 5 שאלות על מה שחסר לך כדי לעשות את זה טוב. שאלה אחת בכל פעם."],
+["unsure","צילום מסך","[מדביקות צילום] מה המשמעות של ההודעה הזאת, ואיך מתקנים אותה?"],
+["unsure","מסמך מצולם","חלץ מהתמונה: ספק, תאריך, מספר חשבונית וסכום. סמן כל ערך שלא קריא – ואל תשלים בעצמך."],
+["unsure","תבנית חודשית","מצורף ייצוא [הדוח] מ-[תאריך]. [מה לעשות]. אם חסר נתון – כתוב מה חסר, ואל תשלים בעצמך."]
+];
+const FUPS=[["קצר לחצי","קצר יותר"],["יותר רשמי","טון אחר"],["יותר חם","טון אחר"],["תחזיר את זה כטבלה","להדביק באקסל"],["שנה רק את הפסקה השנייה","לשנות חלק אחד"],["מה הנחת שלא אמרתי לך?","לחשוף הנחות"],["הסבר את השורה הזאת","להבין"],["החזר בדיוק במבנה של הטבלה הזאת: [מדביקות]","פורמט מדויק"]];
+const QUICK=["טון ענייני","עד 6 שורות","הצג בטבלה","הסבר לפני הנוסחה","הסבר בעברית","אל תשלים בעצמך – כתוב מה חסר","ציין על אילו נתונים זה מבוסס"];
+const ICON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>';
+
+const store={get(k,d){try{const v=localStorage.getItem("gabay-copilot-"+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem("gabay-copilot-"+k,JSON.stringify(v))}catch(e){}}};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+let tt;function say(m){const t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("on"),1900)}
+async function copy(text){
+  try{await navigator.clipboard.writeText(text);return true}catch(e){
+    const t=document.createElement("textarea");t.value=text;t.setAttribute("readonly","");t.style.position="fixed";t.style.opacity="0";document.body.appendChild(t);t.select();
+    let ok=false;try{ok=document.execCommand("copy")}catch(_){}t.remove();return ok}
+}
+function flash(btn,label){const sp=btn.querySelector("span");const old=sp?sp.textContent:"";btn.classList.add("ok");if(sp)sp.textContent=label||"הועתק";setTimeout(()=>{btn.classList.remove("ok");if(sp)sp.textContent=old},1500)}
+
+/* anatomy */
+$("#legend").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const on=b.getAttribute("aria-pressed")!=="true";
+  document.querySelectorAll("#legend button").forEach(x=>x.setAttribute("aria-pressed","false"));document.querySelectorAll("#anatQ mark").forEach(m=>m.classList.remove("on"));
+  if(on){b.setAttribute("aria-pressed","true");document.querySelector(`#anatQ mark[data-k="${b.dataset.k}"]`).classList.add("on")}});
+
+/* builder */
+const bf=[...document.querySelectorAll("[data-b]")];
+function buildText(){const parts=bf.map(t=>t.value.trim().replace(/[.\s]+$/,"")).filter(Boolean);return parts.length?"״"+parts.join(". ")+".״":""}
+function upd(){const n=bf.filter(t=>t.value.trim()).length;document.querySelectorAll("#meter i").forEach((i,k)=>i.classList.toggle("on",k<n));
+  $("#meterTxt").textContent=n===4?"4 מתוך 4 – בקשה מלאה":`${n} מתוך 4 רכיבים`+(n?` · חסר: ${["מטרה","הקשר","מקור","ציפיות"].filter((_,k)=>!bf[k].value.trim()).join(", ")}`:"");
+  const t=buildText();const o=$("#out");o.textContent=t||"הבקשה תופיע כאן בזמן שאתן כותבות.";o.classList.toggle("empty",!t);
+  store.set("builder",bf.map(x=>x.value))}
+store.get("builder",[]).forEach((v,k)=>{if(bf[k])bf[k].value=v||""});
+bf.forEach(t=>t.addEventListener("input",upd));
+$("#quick").innerHTML=QUICK.map(q=>`<button type="button" class="qchip">+ ${esc(q)}</button>`).join("");
+$("#quick").addEventListener("click",e=>{const b=e.target.closest(".qchip");if(!b)return;e.preventDefault();const v=b.textContent.replace(/^\+\s*/,"");const t=bf[3];t.value=t.value.trim()?t.value.trim().replace(/[.,]$/,"")+", "+v:v;upd();t.focus()});
+$("#bCopy").addEventListener("click",async e=>{const t=buildText();if(!t){say("מלאו לפחות רכיב אחד");return}if(await copy(t.slice(1,-1))){flash(e.currentTarget,"הועתק");say("הבקשה הועתקה – הדביקו בקופיילוט")}});
+$("#bClear").addEventListener("click",()=>{bf.forEach(t=>t.value="");upd()});
+upd();
+
+/* library */
+let fav=new Set(store.get("fav",[]));
+const counts=P.reduce((a,[c])=>(a[c]=(a[c]||0)+1,a),{});
+let cur="all";
+function renderChips(){$("#chips").innerHTML=`<button class="chip" data-c="all" aria-pressed="${cur==="all"}">הכול<span class="c">${P.length}</span></button>`+
+  `<button class="chip" data-c="fav" aria-pressed="${cur==="fav"}">⭐ המועדפים שלי<span class="c" id="favC">${fav.size}</span></button>`+
+  Object.keys(CATS).map(k=>`<button class="chip" data-c="${k}" aria-pressed="${cur===k}">${CATS[k]}<span class="c">${counts[k]}</span></button>`).join("")}
+function phs(x){return [...x.matchAll(/\[([^\]]+)\]/g)].map(m=>m[1])}
+function hlText(x,term){let h=esc(x).replace(/\[([^\]]+)\]/g,'<i>[$1]</i>');if(term){const re=new RegExp("("+term.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","gi");h=h.replace(/(<[^>]+>)|([^<]+)/g,(m,tag,txt)=>tag?tag:txt.replace(re,"<mark>$1</mark>"))}return h}
+function card(i){const [c,t,x]=P[i];const ph=phs(x);const seen={};
+  const fields=ph.map((p,j)=>{seen[p]=(seen[p]||0)+1;const lbl=ph.filter(z=>z===p).length>1?`${p} (${seen[p]})`:p;return `<label>${esc(lbl)}<input data-j="${j}" placeholder="${esc(p)}"></label>`}).join("");
+  return `<article class="pc" data-i="${i}"><div class="hd"><div><span class="cat">${CATS[c]}</span><h3>${esc(t)}</h3></div><button class="star" type="button" aria-pressed="${fav.has(i)}" aria-label="${fav.has(i)?"הסרה מהמועדפים":"הוספה למועדפים"}: ${esc(t)}">${fav.has(i)?"★":"☆"}</button></div>
+  <p class="tx">״${hlText(x,"")}״</p>
+  <div class="ft"><button class="act pri" type="button" data-a="copy">${ICON}<span>העתקה</span></button>${ph.length?`<button class="act" type="button" data-a="fill" aria-expanded="false"><span>מילוי והעתקה</span></button>`:""}</div>
+  ${ph.length?`<div class="fill">${fields}<p class="live"></p><div><button class="act pri" type="button" data-a="copyfill">${ICON}<span>העתקת הבקשה המלאה</span></button></div></div>`:""}</article>`}
+$("#lib").innerHTML=P.map((_,i)=>card(i)).join("");
+function filled(el){const i=+el.dataset.i;let j=0;const vals=[...el.querySelectorAll(".fill input")].map(x=>x.value.trim());return P[i][2].replace(/\[([^\]]+)\]/g,(m)=>{const v=vals[j++];return v||m})}
+function livePrev(el){let j=0;const vals=[...el.querySelectorAll(".fill input")].map(x=>x.value.trim());el.querySelector(".live").innerHTML="״"+esc(P[+el.dataset.i][2]).replace(/\[([^\]]+)\]/g,(m)=>{const v=vals[j++];return v?`<i>${esc(v)}</i>`:`<i>${m}</i>`})+"״"}
+function apply(){const term=$("#q").value.trim();const tl=term.toLowerCase();let n=0;
+  document.querySelectorAll(".pc").forEach(el=>{const i=+el.dataset.i;const [c,t,x]=P[i];
+    const ok=(cur==="all"||(cur==="fav"?fav.has(i):c===cur))&&(!tl||(t+" "+x+" "+CATS[c]).toLowerCase().includes(tl));
+    el.hidden=!ok;if(ok){n++;el.querySelector(".tx").innerHTML="״"+hlText(x,term)+"״"}});
+  $("#status").textContent=`מוצגים ${n} מתוך ${P.length} פרומפטים`+(term?` · חיפוש: ״${term}״`:"");
+  const em=$("#empty");em.hidden=n>0;em.textContent=cur==="fav"&&!fav.size?"עוד לא סימנתן מועדפים. לחצו על ☆ בפרומפט שאתן משתמשות בו הרבה – והוא יחכה לכן כאן.":"לא נמצא פרומפט כזה. נסו מילה אחרת, או בחרו ״הכול״."}
+renderChips();apply();
+$("#chips").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;cur=b.dataset.c;renderChips();apply()});
+$("#q").addEventListener("input",apply);
+document.addEventListener("keydown",e=>{if(e.key==="/"&&!/input|textarea/i.test(document.activeElement.tagName)){e.preventDefault();$("#library").scrollIntoView();$("#q").focus()}
+  if(e.key==="Escape"&&document.activeElement===$("#q")){$("#q").value="";apply()}});
+$("#lib").addEventListener("click",async e=>{const el=e.target.closest(".pc");if(!el)return;const i=+el.dataset.i;
+  const st=e.target.closest(".star");if(st){fav.has(i)?fav.delete(i):fav.add(i);store.set("fav",[...fav]);st.setAttribute("aria-pressed",fav.has(i));st.textContent=fav.has(i)?"★":"☆";$("#favC").textContent=fav.size;say(fav.has(i)?"נשמר במועדפים":"הוסר מהמועדפים");if(cur==="fav")apply();return}
+  const b=e.target.closest(".act");if(!b)return;const a=b.dataset.a;
+  if(a==="copy"){if(await copy(P[i][2])){flash(b);say("הפרומפט הועתק – הדביקו בקופיילוט ומלאו את הסוגריים")}}
+  if(a==="fill"){const open=!el.classList.contains("filling");el.classList.toggle("filling",open);b.setAttribute("aria-expanded",open);b.querySelector("span").textContent=open?"סגירת המילוי":"מילוי והעתקה";if(open){livePrev(el);el.querySelector(".fill input").focus()}}
+  if(a==="copyfill"){const t=filled(el);if(await copy(t)){flash(b);say(/\[[^\]]+\]/.test(t)?"הועתק – נשארו סוגריים למילוי":"הבקשה המלאה הועתקה")}}});
+$("#lib").addEventListener("input",e=>{const el=e.target.closest(".pc");if(el&&e.target.matches(".fill input"))livePrev(el)});
+
+/* follow-ups */
+$("#fups").innerHTML=FUPS.map(([t,s],i)=>`<button class="fup" type="button" data-i="${i}"><b>״${esc(t)}״</b><small>${esc(s)}</small></button>`).join("");
+$("#fups").addEventListener("click",async e=>{const b=e.target.closest(".fup");if(!b)return;if(await copy(FUPS[+b.dataset.i][0])){b.classList.add("ok");say("הועתק");setTimeout(()=>b.classList.remove("ok"),1300)}});
+
+/* checklist */
+const cbs=[...document.querySelectorAll("#check input")];const saved=store.get("check",[]);cbs.forEach((c,k)=>c.checked=!!saved[k]);
+function prog(){const n=cbs.filter(c=>c.checked).length;$("#bar").style.width=(n/cbs.length*100)+"%";$("#pTxt").textContent=`${n}/${cbs.length}`;$("#done").classList.toggle("on",n===cbs.length);store.set("check",cbs.map(c=>c.checked))}
+cbs.forEach(c=>c.addEventListener("change",prog));$("#cReset").addEventListener("click",()=>{cbs.forEach(c=>c.checked=false);prog()});prog();
+
+/* nav highlight + top */
+const links=[...document.querySelectorAll(".nav a")];const secs=links.map(a=>document.querySelector(a.getAttribute("href")));
+function onScroll(){const y=window.scrollY+120;let cur=-1;secs.forEach((s,k)=>{if(s&&s.offsetTop<=y)cur=k});links.forEach((a,k)=>a.classList.toggle("on",k===cur));$("#top").classList.toggle("on",window.scrollY>900)}
+window.addEventListener("scroll",onScroll,{passive:true});onScroll();
+$("#top").addEventListener("click",()=>window.scrollTo({top:0}));
+</script>
+</body>
+</html>
